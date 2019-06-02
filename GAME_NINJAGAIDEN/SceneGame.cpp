@@ -393,9 +393,9 @@ void SceneGame::Update(DWORD dt)
 			{
 				Bird *bird = dynamic_cast<Bird*>(listObj[i]);
 				if(ninja->isJumping == false)
-					bird->Update(dt, ninja->GetX(), ninja->GetY(), &listObj);
+					bird->Update(dt, ninja->GetX(), ninja->GetY(),ninja->GetDirection(), &listObj);
 				else
-					bird->Update(dt, ninja->GetX(), -1, &listObj);
+					bird->Update(dt, ninja->GetX(), -1, ninja->GetDirection(), &listObj);
 			}
 			if (dynamic_cast<Witch*>(listObj[i]))
 			{

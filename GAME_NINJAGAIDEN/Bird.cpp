@@ -52,7 +52,7 @@ void Bird::SetStatus(int s)
 }
 
 
-void Bird::Update(DWORD dt, float xNinja, float yNinja, vector<LPGAMEOBJECT>* coObjects)
+void Bird::Update(DWORD dt, float xNinja, float yNinja,int dNinja, vector<LPGAMEOBJECT>* coObjects)
 {
 
 	if (status == INACTIVE)
@@ -79,7 +79,7 @@ void Bird::Update(DWORD dt, float xNinja, float yNinja, vector<LPGAMEOBJECT>* co
 				xStart = x;
 				vy = 0;
 				vx = 0;
-				direction *= -1;
+				direction = (this->x < xNinja ? 1 : -1);
 				vx = BIRD_SPEED_X*direction;
 				start = 0;
 			}
@@ -110,6 +110,7 @@ void Bird::Update(DWORD dt, float xNinja, float yNinja, vector<LPGAMEOBJECT>* co
 	}
 	else // bay ngang
 	{
+		DebugOut(L"\nDIRECTION = %d\n",int(direction));
 		vy = 0;
 		delta = abs(xNinja - xStart) + 200;
 		if (abs(x - xStart) > delta)
@@ -246,14 +247,14 @@ void Bird::Render(Camera * camera)
 
 void Bird::GetActiveBoundingBox(float &left, float &top, float &right, float &bottom, int id)
 {
-	if (id == -1)
+	if (id == -1 && this->id != 262) //id 262 không có bên trái
 	{
 		left = x - BIRD_ACTIVE_BBOX_WIDTH;
 		right = left + 20;
 		top = y - BIRD_ACTIVE_BBOX_HEIGHT;
 		bottom = y + BIRD_ACTIVE_BBOX_HEIGHT;
 	}
-	else
+	else if(this->id != 261) //id 261 không có bên phải
 	{
 		right = x + BIRD_ACTIVE_BBOX_WIDTH;
 		left = right - 20;

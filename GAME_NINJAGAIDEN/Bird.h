@@ -5,7 +5,7 @@
 #define BIRD_SPEED_X 0.3f
 #define BIRD_SPEED_Y 0.15f
 #define BIRD_GRAVITY 0.005f
-#define BIRD_ACTIVE_BBOX_WIDTH 100
+#define BIRD_ACTIVE_BBOX_WIDTH 200
 #define BIRD_ACTIVE_BBOX_HEIGHT 300
 #define TIME_WAIT 40
 
@@ -24,7 +24,7 @@ public:
 	Bird(int direction, float X, float Y, int status);
 	virtual ~Bird();
 
-	void Update(DWORD dt, float xNinja, float yNinja, vector<LPGAMEOBJECT> *coObjects = NULL);
+	void Update(DWORD dt, float xNinja, float yNinja, int dNinja, vector<LPGAMEOBJECT> *coObjects = NULL);
 	virtual void Render(Camera *camera);
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 	virtual void GetActiveBoundingBox(float &left, float &top, float &right, float &bottom, int id);

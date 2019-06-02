@@ -1,3 +1,4 @@
 ﻿  Bird.cpp
-  GAME_NINJAGAIDEN.vcxproj -> C:\Users\TyanLover\Desktop\GAME_NINJAGAIDEN\Debug\GAME_NINJAGAIDEN.exe
-  GAME_NINJAGAIDEN.vcxproj -> C:\Users\TyanLover\Desktop\GAME_NINJAGAIDEN\Debug\GAME_NINJAGAIDEN.pdb (Partial PDB)
+cl : Command line warning D9028: minimal rebuild failure, reverting to normal build
+  GAME_NINJAGAIDEN.vcxproj -> C:\Users\TyanLover\Desktop\GAME_NINJAGAIDEN\GameNinjaGaiden\Debug\GAME_NINJAGAIDEN.exe
+  GAME_NINJAGAIDEN.vcxproj -> C:\Users\TyanLover\Desktop\GAME_NINJAGAIDEN\GameNinjaGaiden\Debug\GAME_NINJAGAIDEN.pdb (Partial PDB)
