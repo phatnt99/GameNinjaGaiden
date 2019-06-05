@@ -208,6 +208,15 @@
     <ClCompile Include="WPWindmillStar.cpp">
       <Filter>GameObject\Weapons</Filter>
     </ClCompile>
+    <ClCompile Include="Boss.cpp">
+      <Filter>GameObject\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Bom.cpp">
+      <Filter>GameObject\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect_boss.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Define.h">
@@ -285,9 +294,6 @@
     <ClInclude Include="Enemy.h">
       <Filter>GameObject\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Soldier.h">
-      <Filter>GameObject\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="Sword.h">
       <Filter>GameObject\Weapons</Filter>
     </ClInclude>
@@ -350,6 +356,18 @@
     </ClInclude>
     <ClInclude Include="WPWindmillStar.h">
       <Filter>GameObject\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss.h">
+      <Filter>GameObject\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Bom.h">
+      <Filter>GameObject\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect_boss.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Soldier.h">
+      <Filter>GameObject</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

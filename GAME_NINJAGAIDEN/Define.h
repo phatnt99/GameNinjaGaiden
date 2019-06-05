@@ -73,6 +73,7 @@ enum eType
 	SOLDIER = 14,
 	GUNNER = 15,
 	RUNNER = 16,
+	BOSS = 17,
 
 	//ground
 	BRICK = 21,
@@ -90,6 +91,7 @@ enum eType
 	WPFIREWHEEL = 67,
 	WPWINDMILLSTAR = 68,
 	NON_WEAPON_COLLECT = 32,
+	BOM = 33,
 
 	//map
 	MAP1 = 101,
@@ -102,6 +104,7 @@ enum eType
 	OBJECT_CLIMB = 112,
 	OBJECT_CLIMBUP = 113,
 	OBJECT_RUNNER = 114,
+	DOOR = 115,
 
 	//item
 	STRENGTH = 220,
@@ -122,7 +125,8 @@ enum eType
 	BOARD_TRANS = 303,
 	ALPHABET = 302,
 	//effect
-	EFFECT = 500
+	EFFECT = 500,
+	EFFECT_BOSS = 501
 
 };
 

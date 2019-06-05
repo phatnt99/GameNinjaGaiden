@@ -9,7 +9,25 @@ ObjectHidden::ObjectHidden(float X, float Y, int W, int H, int st)
 	width = W;
 	height = H;
 	sprite = new CSprite(texture, 1000);
-	type = st == 1 ? eType::OBJECT_CLIMB : (st == 0? eType::OBJECT_CLIMBUP : eType::OBJECT_RUNNER);
+
+	switch (st)
+	{
+	case 0:
+		type = OBJECT_CLIMBUP;
+		break;
+	case 1:
+		type = OBJECT_CLIMB;
+		break;
+	case 2:
+		type = OBJECT_RUNNER;
+		break;
+	case 9:
+		type = DOOR;
+		break;
+	default:
+		break;
+	}
+
 	Health = 1;
 }
 

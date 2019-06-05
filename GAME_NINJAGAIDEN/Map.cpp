@@ -23,6 +23,9 @@ void Map::LoadMap(eType type)
 	case eType::MAP2:
 		ReadMapTXT("Resources/map/readFileMap2.txt");
 		break;
+	case eType::MAP3:
+		ReadMapTXT("Resources/map/readFileMap3.txt");
+		break;
 	default:
 		break;
 	}

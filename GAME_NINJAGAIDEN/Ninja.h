@@ -22,6 +22,9 @@
 #include "ObjectHidden.h"
 #include "Gunner.h"
 #include "Runner.h"
+#include "Bom.h"
+#include "GunnerBullet.h"
+#include "Bullet.h"
 #include "WPWindmillStar.h"
 //#include "Sound.h"
 //#include "ThrowingAxe.h"
@@ -30,7 +33,7 @@
 //#include "StopWatch.h"
 //#include "Boomerang.h"
 
-#define NINJA_POSITION_DEFAULT  50.0f, 150.0f
+#define NINJA_POSITION_DEFAULT  0.0f, 150.0f
 
 
 #define NINJA_BBOX_WIDTH 50
@@ -42,13 +45,13 @@
 
 #define NINJA_VJUMP 0.50f
 #define NINJA_VJUMP_HURTING 0.5f // nhảy lúc bị đau
-#define PULL_UP_NINJA_AFTER_JUMPING 1.6f // Kéo NINJA lên 18px sau khi nhảy, tránh overlaping do BBOX bottom thu lại khi nhảy
+#define PULL_UP_NINJA_AFTER_JUMPING 2.0f // Kéo NINJA lên 18px sau khi nhảy, tránh overlaping do BBOX bottom thu lại khi nhảy
 
 #define NINJA_GRAVITY 0.005f 
 #define NINJA_GRAVITY_JUMPING 0.001f 
 #define NINJA_GRAVITY_HURTING 0.003f
 
-#define NINJA_WALKING_SPEED 0.2f //0.12f 
+#define NINJA_WALKING_SPEED 0.3f //0.2f 
 
 #define NINJA_STATE_IDLE 0
 #define NINJA_STATE_WALKING 1
@@ -102,7 +105,7 @@
 #define NINJA_DEFAULT_HEALTH 16
 #define NINJA_DEFAULT_STRENGTH 0
 #define NINJA_DEFAULT_SCORE 0
-#define NINJA_DEFAULT_LIVES 0
+#define NINJA_DEFAULT_LIVES 2
 #define NINJA_DEFAULT_RESTORE 6
 
 #define NINJA_UNTOUCHABLE_TIME 1000 
@@ -111,7 +114,6 @@
 class Ninja : public GameObject
 {
 private:
-	int k = 0;
 	CSprite * _sprite_deadth;
 
 	int strength; // strength cua ninja
@@ -139,7 +141,9 @@ private:
 	bool isAutoGoX = 0; // đang ở chế độ auto go?
 
 	bool isDeadth;
-	bool isFallDown;
+	bool isClimbing;
+	bool isClimbUp;
+	bool isGetNewStage;
 
 	bool untouchable;
 	DWORD untouchable_start;
@@ -158,8 +162,7 @@ public:
 	bool isWalking;
 	bool isJumping;
 	bool isSitting;
-	bool isClimbing;
-	bool isClimbUp;
+
 
 	int directionY; // hướng đi theo trục y của NINJA
 
@@ -200,7 +203,6 @@ public:
 	void CollisionWithEnemyArea(const vector<LPGAMEOBJECT> *coObjects = NULL);
 	void CollisionWeaponWithObj(const vector<LPGAMEOBJECT> *coObjects = NULL);
 	void CollisionWeaponWithNinja(const vector<LPGAMEOBJECT> *coObjects = NULL);
-	void CollisionWithItems(const vector<LPGAMEOBJECT> *coObjects = NULL);
 	void CollisionWithEnemy(const vector<LPGAMEOBJECT> *coObjects = NULL);
 	//void CollisionWithObjHidden(const vector<LPGAMEOBJECT> *coObjects = NULL);
 	//void CollisionIsOnStair(vector<LPGAMEOBJECT> *coObjects = NULL);
@@ -240,6 +242,9 @@ public:
 	bool GetIsClimbUp() { return isClimbUp; }
 	void SetIsClimbUp(bool b) { isClimbUp = b; }
 
+
+	bool GetIsNewStage() { return isGetNewStage; }
+	void SetIsNewStage(bool b) { isGetNewStage =b ; }
 	eType GetTypeWeaponCollect();
 	void SetTypeWeaponCollect(eType t);
 	void WeaponCollect(eType t);

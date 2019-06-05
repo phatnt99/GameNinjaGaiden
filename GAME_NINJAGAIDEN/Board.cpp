@@ -21,7 +21,7 @@ Board::Board(float X, float Y)
 }
 
 
-void Board::Render(Ninja * ninja, int state1, int state2, int RemainingTime)
+void Board::Render(Ninja * ninja, int state1, int state2, int RemainingTime, Boss *boss)
 {
 	sprite->Draw(x, y);
 
@@ -41,12 +41,12 @@ void Board::Render(Ninja * ninja, int state1, int state2, int RemainingTime)
 
 
 	int BloodBoss = 16;
-	//if (boss != NULL)
-	//{
-	//	BloodBoss = (int)(boss->GetHealth() * 16 / 24);// HEALTH =24 -> 16 vạch
-	//	if (BloodBoss == 0 && boss->GetHealth() > 0)
-	//		BloodBoss = 1;
-	//}
+	if (boss != NULL)
+	{
+		BloodBoss = (int)(boss->GetHealth());// HEALTH =16 -> 16 vạch
+		if (BloodBoss == 0 && boss->GetHealth() > 0)
+			BloodBoss = 1;
+	}
 
 	boardHealth->Draw(ninja->GetHealth(), BloodBoss);
 

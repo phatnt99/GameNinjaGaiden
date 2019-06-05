@@ -20,7 +20,9 @@
 #include "TheBird.h"
 #include "Gunner.h"
 #include "Runner.h"
+#include "Boss.h"
 #include "Windmillstar.h"
+
 #define GAME_TIME_MAX 150
 
 #define REGION_CREATE_PANTHER_LEFT 1090.0f
@@ -42,7 +44,6 @@ class SceneGame : public Scene
 {
 private:
 
-	int iii = 0;
 	Ninja * ninja;
 	Map * TileMap;
 	Camera *camera;
@@ -65,7 +66,8 @@ private:
 	DWORD TimeWaitedChangeColorBackground; // thời gian đã chờ của việc thay đổi màu nền
 	DWORD LimitTimeWaitChangeColorBackground = 3000; // thời gian cần chờ để đỏi màu nền
 	DWORD timeWait;
-
+	float remainTime = 0;
+	Boss *boss;
 	int count = 1;
 public:
 	SceneGame();

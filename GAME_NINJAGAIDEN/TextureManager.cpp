@@ -30,6 +30,8 @@ void TextureManager::LoadResource()
 	AddTexture(eType::SWORD, new CTexture("Resources/weapon/sword.png",4,1,4));
 	AddTexture(eType::WPFIREWHEEL, new CTexture("Resources/weapon/fire.png", 1, 1, 1));
 	AddTexture(eType::GUNNERBULLET, new CTexture("Resources/weapon/gunner_bullet.PNG"));
+	AddTexture(eType::BOM, new CTexture("Resources/weapon/bom.png"));
+
 
 	//player
 	AddTexture(eType::NINJA, new CTexture("Resources/ninja1.png", 8, 4, 32));
@@ -39,6 +41,8 @@ void TextureManager::LoadResource()
 	//map
 	AddTexture(eType::MAP1, new CTexture("Resources/map/tileset_map1.png", 14, 7, 98));
 	AddTexture(eType::MAP2, new CTexture("Resources/map/tileset_map2.png", 47, 5, 235));
+	AddTexture(eType::MAP3, new CTexture("Resources/map/tileset_map3.png", 45, 1, 45));
+
 
 	//ground
 	AddTexture(eType::BRICK_TRANSPARENT, new CTexture("Resources/ground/brick_transparent.png"));
@@ -56,10 +60,13 @@ void TextureManager::LoadResource()
 	AddTexture(eType::WITCH, new CTexture("Resources/enemy/Witch.png", 3, 1, 3));
 	AddTexture(eType::DOG, new CTexture("Resources/enemy/dog.png", 2, 1, 2));
 	AddTexture(eType::SOLDIER, new CTexture("Resources/enemy/soldier.png", 4, 1, 4));
-	AddTexture(eType::EFFECT, new CTexture("Resources/enemy/effectnormal.png", 4, 1, 4));
 	AddTexture(eType::GUNNER, new CTexture("Resources/enemy/gunner.png", 2, 1, 2));
 	AddTexture(eType::RUNNER, new CTexture("Resources/enemy/runner.PNG", 2, 1, 2));
+	AddTexture(eType::BOSS, new CTexture("Resources/boss.png", 2, 1, 2));
 
+	//effect
+	AddTexture(eType::EFFECT, new CTexture("Resources/enemy/effectnormal.png", 4, 1, 4));
+	AddTexture(eType::EFFECT_BOSS, new CTexture("Resources/effect_boss.png", 3, 1, 3));
 
 
 	//item

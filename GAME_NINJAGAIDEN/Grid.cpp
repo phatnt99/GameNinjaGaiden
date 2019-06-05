@@ -11,6 +11,7 @@
 #include "Soldier.h"
 #include "Gunner.h"
 #include "Runner.h"
+#include "Boss.h"
 #include "Camera.h"
 
 Unit::Unit(Grid * grid, LPGAMEOBJECT obj, float x, float y)
@@ -110,6 +111,8 @@ GameObject * Grid::GetNewObject(int id, int direction, int type, float x, float 
 		return new Gunner(direction, x, y, st);
 	case eType::RUNNER:
 		return new Runner(direction, x, y, st);
+	case eType::BOSS:
+		return new Boss(direction, x, y, st);
 	}
 	return NULL;
 }

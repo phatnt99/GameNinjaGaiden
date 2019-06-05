@@ -102,7 +102,6 @@ public:
 	eType GetType();
 
 	void RenderBoundingBox(Camera * camera);
-	void RenderActiveBoundingBox(Camera * camera);
 	LPCOLLISIONEVENT SweptAABBEx(GameObject * coO, int flag);
 	void CalcPotentialCollisions(vector<GameObject*> *coObjects, vector<LPCOLLISIONEVENT> &coEvents, int flag);
 	void FilterCollision(

@@ -180,7 +180,6 @@ void GameObject::RenderBoundingBox(Camera * camera)
 		(this->type == eType::OBJECT_CLIMB || this->type == eType::OBJECT_CLIMBUP)? 200:100);
 }
 //
-
 LPCOLLISIONEVENT GameObject::SweptAABBEx(GameObject * coO, int flag)
 {
 	float sl, st, sr, sb;		// static object bbox

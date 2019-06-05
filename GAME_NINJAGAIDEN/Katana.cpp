@@ -7,6 +7,7 @@ Katana::Katana()
 	type = eType::KATANA;
 	texture = TextureManager::GetInstance()->GetTexture(type);
 	sprite = new CSprite(texture, KATANA_ANI_WAIT_TIME);
+	isAttacked = false;
 }
 
 
@@ -16,15 +17,14 @@ Katana::~Katana()
 
 void Katana::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	DebugOut(L"\nxKatana = %f\n", x);
+	//DebugOut(L"\nxKatana = %f\n", x);
 	GameObject::Update(dt);
 
 	// update for check collision
-
+	
 	isFinish = sprite->GetCurrentFrame() == 3;
 	int StartFrame = KATANA_ANI_START; // ánh xạ chỉ số frame bằng level thay vì ifelse 
 	int EndFrame = 3;
-
 
 	if (StartFrame <= sprite->GetCurrentFrame() && sprite->GetCurrentFrame() < EndFrame)
 		sprite->Update(dt);
@@ -74,8 +74,8 @@ void Katana::Attack(float X, float Y, int Direction)
 
 	Weapon::Attack(X, Y, Direction);
 	UpdatePositionFitCharacter();
-		sprite->SelectFrame(KATANA_ANI_START);
-		sprite->ResetTime();
+	sprite->SelectFrame(KATANA_ANI_START);
+	sprite->ResetTime();
 }
 
 void Katana::UpdatePositionFitCharacter()
@@ -84,7 +84,7 @@ void Katana::UpdatePositionFitCharacter()
 	if (direction == -1)
 	{
 		this->x = x - 20;
-		this->y = y  -1;
+		this->y = y - 1;
 
 	}
 	else

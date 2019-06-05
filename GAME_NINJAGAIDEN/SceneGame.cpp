@@ -28,6 +28,7 @@ void SceneGame::KeyState(BYTE * state)
 
 			if ((Game::GetInstance()->IsKeyDown(DIK_LEFT) && ninja->GetDirection() == 1) || (Game::GetInstance()->IsKeyDown(DIK_RIGHT) && ninja->GetDirection() == -1))
 			{
+				//DebugOut(L"\nVa cham OBJH\n");
 				ninja->Stop();
 				//ninja->SetSpeed(NINJA_WALKING_SPEED * ninja->GetDirection(), -NINJA_VJUMP);
 				ninja->SetIsClimbing(false);
@@ -212,6 +213,7 @@ void SceneGame::OnKeyDown(int KeyCode)
 	//}
 	if (KeyCode == DIK_Z)
 	{
+		
 		if (ninja->isJumping)
 			return;
 		if (Game::GetInstance()->IsKeyDown(DIK_LEFT) || Game::GetInstance()->IsKeyDown(DIK_RIGHT))
@@ -270,7 +272,7 @@ void SceneGame::LoadResources()
 
 void SceneGame::InitGame()
 {
-	LoadMap(eType::MAP2);
+	LoadMap(eType::MAP3);
 	ninja->Init();
 
 	gameTime->SetTime(0); // đếm lại từ 0
@@ -307,7 +309,7 @@ void SceneGame::Update(DWORD dt)
 {
 	if (isGameOver)
 		return;
-
+	//DebugOut(L"\nMAP = %d\n",mapCurrent);
 	if (gameTime->GetTime() >= GAME_TIME_MAX || ninja->GetHealth() < 1)
 	{
 		if (ninja->GetIsDeadth())
@@ -363,6 +365,18 @@ void SceneGame::Update(DWORD dt)
 
 		return;
 	}
+	else if (ninja->GetIsNewStage())
+	{
+		camera->RestorePosition();
+		camera->RestoreBoundary();
+
+		gameTime->SetTime(0);
+
+		LoadMap(mapCurrent == MAP1 ? MAP2 : (mapCurrent == MAP2 ? MAP3 : mapCurrent));
+
+		ResetResource();
+		ninja->SetIsNewStage(false);
+	}
 	int count = 0;
 	listObj.clear();
 	listUnit.clear(); // lay obj co trong vung camera thong qua unit
@@ -372,6 +386,8 @@ void SceneGame::Update(DWORD dt)
 	{
 		LPGAMEOBJECT obj = listUnit[i]->GetObj();
 		listObj.push_back(obj);
+		if (obj->GetType() == BOSS)
+			boss = dynamic_cast<Boss*>(obj);
 	}
 	ninja->Update(dt, &listObj);
 	if (camera->AllowFollowNinja())
@@ -380,6 +396,7 @@ void SceneGame::Update(DWORD dt)
 	camera->Update(dt);
 
 	gameTime->Update(dt);
+	
 
 	DWORD now = GetTickCount();
 	//DebugOut(L"now = %d \ttimeBegin = %d\n", now, timeBeginFreeze);
@@ -392,10 +409,7 @@ void SceneGame::Update(DWORD dt)
 			if (dynamic_cast<Bird*>(listObj[i]))
 			{
 				Bird *bird = dynamic_cast<Bird*>(listObj[i]);
-				if(ninja->isJumping == false)
-					bird->Update(dt, ninja->GetX(), ninja->GetY(),ninja->GetDirection(), &listObj);
-				else
-					bird->Update(dt, ninja->GetX(), -1, ninja->GetDirection(), &listObj);
+				bird->Update(dt, ninja->GetX(), ninja->GetY(), ninja->GetDirection(), &listObj);
 			}
 			if (dynamic_cast<Witch*>(listObj[i]))
 			{
@@ -417,10 +431,35 @@ void SceneGame::Update(DWORD dt)
 				Runner *runner = dynamic_cast<Runner*>(listObj[i]);
 				runner->Update(dt, ninja->GetX(), grid, &listObj);
 			}
+			if (dynamic_cast<Boss*>(listObj[i]))
+			{
+				Boss *boss = dynamic_cast<Boss*>(listObj[i]);
+				boss->Update(dt, ninja->GetX(), grid, &listObj);
+			}
 			else
 				obj->Update(dt, &listObj);
 		}
 	}
+
+	if (boss != nullptr)
+	{
+		if (boss->GetIsDeath() && remainTime == 0)
+		{
+			ninja->SetStrength(ninja->GetStrength() - 1);
+			if (ninja->GetStrength() == 0)
+				remainTime = GAME_TIME_MAX - gameTime->GetTime();
+		}
+
+		if (boss->GetIsDeath() && remainTime > 0)
+		{
+			ninja->SetScore(ninja->GetScore() + 90);
+			remainTime -= 0.5;
+			//DebugOut(L"\nTRU CON %f\n", remainTime);
+			if (remainTime == 0)
+				remainTime = -1;
+		}
+	}
+
 
 	CheckDropItem();
 	SetInactiveEnemy();
@@ -562,6 +601,7 @@ void SceneGame::SetInactiveEnemy()
 					continue;
 				if (enemy->GetStatus() == ACTIVE)
 				{
+					//DebugOut(L"INACTIVE\n");
 					enemy->SetStatus(INACTIVE);
 				}
 			}
@@ -604,7 +644,26 @@ void SceneGame::Render()
 
 		ninja->Render(camera);
 
-		board->Render(ninja, 3, StateCurrent, GAME_TIME_MAX - gameTime->GetTime());
+		if (remainTime > 0)
+		{
+			//DebugOut(L"if 1\tisDeath = %d\t remain = %f\n", boss->GetIsDeath() == true ? 1 : 0, remainTime);
+			board->Render(ninja, 3, StateCurrent, remainTime, boss);
+
+		}
+		if (remainTime == 0)
+		{
+			//DebugOut(L" if 2\t isDeath = %d\t remain = %d\n", boss->GetIsDeath() == true ? 1 : 0, remainTime);
+			board->Render(ninja, 3, StateCurrent, GAME_TIME_MAX - gameTime->GetTime(), boss);
+
+		}
+		else if (remainTime <= -1)
+		{
+			//board->Render(ninja, 3, StateCurrent, 0, boss);
+			TileMap->DrawMap(camera, 0, 0, 0);
+			Text.Draw(200, 200, "GAME OVER");
+		}
+
+	
 	}
 	else
 	{
@@ -639,7 +698,7 @@ void SceneGame::Render()
 
 			ninja->Render(camera);
 
-			board->Render(ninja, 3, StateCurrent, GAME_TIME_MAX - gameTime->GetTime());
+			board->Render(ninja, 3, StateCurrent, GAME_TIME_MAX - gameTime->GetTime(), boss);
 		}
 		else
 		{
@@ -718,6 +777,23 @@ void SceneGame::LoadMap(eType x)
 		ninja->SetPositionBackup(NINJA_POSITION_DEFAULT);
 		StateCurrent = 2;
 		break;
+	case eType::MAP3:
+		grid->SetFile("Resources/map/readObjectMap3.txt");
+		TileMap->LoadMap(eType::MAP3);
+
+		camera->SetAllowFollowNinja(true);
+
+		camera->SetBoundary(0.0f, (float)(TileMap->GetMapWidth() - camera->GetWidth())); // set biên camera dựa vào kích thước map
+		camera->SetBoundaryBackup(camera->GetBoundaryLeft(), camera->GetBoundaryRight()); // backup lại biên
+
+		camera->SetPosition(0, 0);
+
+		camera->SetAllowFollowNinja(true);
+
+		ninja->SetPosition(50, 309);
+		ninja->SetPositionBackup(NINJA_POSITION_DEFAULT);
+		StateCurrent = 3;
+		break;
 	}
 
 	ResetResource();
@@ -725,22 +801,13 @@ void SceneGame::LoadMap(eType x)
 
 void SceneGame::CheckCollision(DWORD dt)
 {
-	//CheckCollisionWeapon(listObj); // kt va chạm vũ khí với các object nền
-
-	//CheckCollisionSimonWithItem();
-	//CheckCollisionSimonWithObjectHidden();
-	//CheckCollisionSimonWithGate(); //va chạm với cửa
-
-	//if (!isProcessingGoThroughTheDoor1 && !isProcessingGoThroughTheDoor2) // ko phải đang xử lí qua cửa
 	CheckCollisonOfNinja(dt); // kt vũ khí với enemy và simon với enemy
-
-	//CheckCollisionWithBoss(); // kt vũ khí với enemy và simon với boss
 
 }
 
 void SceneGame::CheckCollisonOfNinja(DWORD dt)
 {
-	//ninja->CollisionWithEnemy(&listObj);
+	ninja->CollisionWithEnemy(&listObj);
 
 	ninja->CollisionWeaponWithObj(&listObj);
 	ninja->CollisionWeaponWithNinja(&listObj);

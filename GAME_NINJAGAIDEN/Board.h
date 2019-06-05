@@ -9,6 +9,7 @@
 #include "Ninja.h"
 #include "BoardHealth.h"
 #include "TextureManager.h"
+#include "Boss.h"
 
 #define BOARD_DEFAULT_POSITION_X 0.0f
 #define BOARD_DEFAULT_POSITION_Y 0.0f
@@ -30,7 +31,7 @@ private:
 
 public:
 	Board(float X, float Y);
-	void Render(Ninja * ninja, int state1, int state2, int RemainingTime);
+	void Render(Ninja * ninja, int state1, int state2, int RemainingTime,Boss *boss );
 	~Board();
 
 	void SetTexture(CTexture * tex);

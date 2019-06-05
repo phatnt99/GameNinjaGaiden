@@ -2,7 +2,7 @@
 #define __THIEF_H__
 
 
-#define THIEF_SPEED_X 0.09f
+#define THIEF_SPEED_X 0.07f
 #define THIEF_GRAVITY 0.005f
 #define THIEF_ACTIVE_BBOX_WIDTH 268
 #define THIEF_ACTIVE_BBOX_HEIGHT 200

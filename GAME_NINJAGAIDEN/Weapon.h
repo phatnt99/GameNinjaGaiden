@@ -13,12 +13,13 @@ class Weapon : public GameObject
 protected:
 	bool isFinish;
 	DWORD LastTimeAttack;
+
 	// Thời điểm tấn công cuối cùng
 
 public:
 	Weapon();
 	~Weapon();
-
+	bool isAttacked;
 	int GetDirection();
 	void SetDirection(int Direction);
 	virtual void Attack(float X, float Y, int Direction);

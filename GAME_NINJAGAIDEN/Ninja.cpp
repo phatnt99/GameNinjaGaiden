@@ -12,7 +12,7 @@ Ninja::Ninja(Camera* camera)
 	this->camera = camera;
 	//mapWeapon[eType::KATANA] = new Katana();
 	subWeapon.push_back(new Katana());
-
+	isGetNewStage = false;
 	Init();
 }
 
@@ -24,25 +24,64 @@ Ninja::~Ninja()
 
 void Ninja::GetBoundingBox(float & left, float & top, float & right, float & bottom)
 {
-	if (isSitting == true)
+	if (direction == 1)
 	{
-		left = x;
-		top = y + 12;
-		right = x + NINJA_BBOX_WIDTH - 15;
-		bottom = y + NINJA_BBOX_SITTING_HEIGHT;
+		if (isSitting == true)
+		{
+			left = x + 12;
+			top = y + 20;
+			right = x + NINJA_BBOX_WIDTH;
+			bottom = y + NINJA_BBOX_SITTING_HEIGHT;
+		}
+		else
+		{
+			left = x + 12;
+			top = y + 10;
+			right = left + NINJA_BBOX_WIDTH - 10;
+			bottom = y + NINJA_BBOX_HEIGHT;
+
+			if (isJumping)
+			{
+				//top = y + 30;
+				bottom = y + NINJA_BBOX_JUMPING_HEIGHT;
+			}
+			if (isClimbing)
+			{
+				left = x + 12;
+				top = y + 10;
+				right = left + NINJA_BBOX_WIDTH - 15;
+				bottom = y + NINJA_BBOX_HEIGHT;
+			}
+		}
 	}
 	else
 	{
-		left = x + 12;
-		top = y + 10;
-		right = left + NINJA_BBOX_WIDTH;
-		bottom = y + NINJA_BBOX_HEIGHT;
-
-		if (isJumping)
+		if (isSitting == true)
 		{
-			//top = y + 30;
-			bottom = y + NINJA_BBOX_JUMPING_HEIGHT;
+			left = x + 20;
+			top = y + 20;
+			right = x + 12 + NINJA_BBOX_WIDTH;
+			bottom = y + NINJA_BBOX_SITTING_HEIGHT;
+		}
+		else
+		{
+			left = x + 30;
+			top = y + 10;
+			right = x + 10 + NINJA_BBOX_WIDTH;
+			bottom = y + NINJA_BBOX_HEIGHT;
 
+			if (isJumping)
+			{
+				bottom = y + NINJA_BBOX_JUMPING_HEIGHT;
+
+			}
+			if (isClimbing)
+			{
+				left = x + 30;
+				top = y + 10;
+				right = x + 12 + NINJA_BBOX_WIDTH;
+				bottom = y + NINJA_BBOX_HEIGHT;
+			}
 		}
 	}
 
@@ -50,28 +89,67 @@ void Ninja::GetBoundingBox(float & left, float & top, float & right, float & bot
 
 void Ninja::GetBoundingBoxBrick(float & left, float & top, float & right, float & bottom)
 {
-	if (isSitting == true)
+	if (direction == 1)
 	{
-		left = x;
-		top = y + 60;
-		right = x + NINJA_BBOX_WIDTH - 15;
-		bottom = y + NINJA_BBOX_SITTING_HEIGHT;
+		if (isSitting == true)
+		{
+			left = x + 12;
+			top = y + 60;
+			right = x + NINJA_BBOX_WIDTH;
+			bottom = y + NINJA_BBOX_SITTING_HEIGHT;
+		}
+		else
+		{
+			left = x + 12;
+			top = y + 60;
+			right = left + NINJA_BBOX_WIDTH - 10;
+			bottom = y + NINJA_BBOX_HEIGHT;
+
+			if (isJumping)
+			{
+				//top = y + 30;
+				bottom = y + NINJA_BBOX_JUMPING_HEIGHT;
+
+			}
+			if (isClimbing)
+			{
+				left = x + 12;
+				top = y + 10;
+				right = left + NINJA_BBOX_WIDTH - 15;
+				bottom = y + NINJA_BBOX_HEIGHT;
+			}
+		}
 	}
 	else
 	{
-		left = x + 12;
-		top = y + 60;
-		right = left + NINJA_BBOX_WIDTH;
-		bottom = y + NINJA_BBOX_HEIGHT;
-
-		if (isJumping)
+		if (isSitting == true)
 		{
-			//top = y + 30;
-			bottom = y + NINJA_BBOX_JUMPING_HEIGHT;
+			left = x + 20;
+			top = y + 20;
+			right = x + 12 + NINJA_BBOX_WIDTH;
+			bottom = y + NINJA_BBOX_SITTING_HEIGHT;
+		}
+		else
+		{
+			left = x + 30;
+			top = y + 10;
+			right = x + 10 + NINJA_BBOX_WIDTH;
+			bottom = y + NINJA_BBOX_HEIGHT;
 
+			if (isJumping)
+			{
+				bottom = y + NINJA_BBOX_JUMPING_HEIGHT;
+
+			}
+			if (isClimbing)
+			{
+				left = x + 30;
+				top = y + 10;
+				right = x + 12 + NINJA_BBOX_WIDTH;
+				bottom = y + NINJA_BBOX_HEIGHT;
+			}
 		}
 	}
-
 }
 
 void Ninja::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -117,7 +195,7 @@ void Ninja::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 		else
 			sprite->SelectFrame(NINJA_ANI_CLIMB);
-		
+
 	}
 	else
 	{
@@ -234,10 +312,6 @@ void Ninja::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			dx = vx * dt;
 			dy = vy * dt;
 			vy += NINJA_GRAVITY_JUMPING * dt;
-			if (vy > 0)
-				isFallDown = true;
-			else
-				isFallDown = false;
 			//if (y >= 250)
 			//{
 			//	y = 250;
@@ -258,9 +332,30 @@ void Ninja::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				vy += NINJA_GRAVITY * dt;
 		}
 		//CollisionWithObjHidden(coObjects);
+		float l, r, t, b;
+		GetBoundingBox(l, t, r, b);
+		//DebugOut(L"BAN DAU left = %f\tright = %f\t top=%f\tbottom = %f\n", l, r, t, b);
 		CollisionWithBrick(coObjects);
 	}
 
+
+
+	//for (auto& objWeapon : subWeapon)
+	//{
+	//	if (objWeapon.second->GetFinish() == false) // vũ khi này chưa kết thúc thì update
+	//	{
+	//		if (objWeapon.second->GetType() == eType::KATANA)
+	//		{
+	//			//if(isUseSubWeapon == true)
+	//			//	continue;
+	//			objWeapon.second->SetPosition(this->x, this->y);
+	//			objWeapon.second->SetSpeed(vx, vy); // set vận tốc để kt va chạm
+	//			objWeapon.second->UpdatePositionFitCharacter();
+	//		}
+
+	//		objWeapon.second->Update(dt, coObjects);
+	//	}
+	//}
 
 	for (auto obj : subWeapon)
 	{
@@ -276,16 +371,12 @@ void Ninja::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}
 			else if (obj->GetType() == eType::WPWINDMILLSTAR)
 			{
-				if (isJumping)
-					dynamic_cast<WPWindmillStar*>(obj)->status = 1;
-				else if (isFallDown)
-					dynamic_cast<WPWindmillStar*>(obj)->status = 2;
+				dynamic_cast<WPWindmillStar*>(obj)->yNinja = y;
 				dynamic_cast<WPWindmillStar*>(obj)->xNinja = x;
-				//dynamic_cast<WPWindmillStar*>(obj)->yNinja = y;
-				//obj->BackupX = x;
-				//obj->backupY = y + 18;
-
+				obj->BackupX = x;
+				obj->backupY = y + 18;
 			}
+			//DebugOut(L"NINJA isAttack = %d\n", isAttacking == 1 ? true : false);
 			obj->Update(dt, coObjects);
 		}
 	}
@@ -433,7 +524,7 @@ void Ninja::SetHurt()
 
 	ResetSit();
 
-		subWeapon.front()->SetFinish(true);
+	subWeapon.front()->SetFinish(true);
 
 	if (true) // ko "đang tự đi" và ko "đang trên thang" thì bật ra
 	{
@@ -495,7 +586,7 @@ void Ninja::CollisionWithBrick(const vector<LPGAMEOBJECT>* coObjects)
 
 	for (UINT i = 0; i < coObjects->size(); i++)
 	{
-		if (coObjects->at(i)->GetType() == eType::BRICK || coObjects->at(i)->GetType() == eType::OBJECT_CLIMB || coObjects->at(i)->GetType() == eType::OBJECT_CLIMBUP)
+		if (coObjects->at(i)->GetType() == eType::BRICK || coObjects->at(i)->GetType() == eType::OBJECT_CLIMB || coObjects->at(i)->GetType() == eType::OBJECT_CLIMBUP || coObjects->at(i)->GetType() == eType::DOOR)
 		{
 
 			listEnemy.push_back(coObjects->at(i));
@@ -535,10 +626,14 @@ void Ninja::CollisionWithBrick(const vector<LPGAMEOBJECT>* coObjects)
 						isJumping = false;
 						y = y - PULL_UP_NINJA_AFTER_JUMPING;
 					}
+					isCollisionAxisYWithBrick = true;
 				}
 				else
+				{
 					y += dy;
-
+					isCollisionAxisYWithBrick = true;
+				}
+				
 				//if (nx != 0)
 				//{
 				//	if (isJumping)
@@ -561,12 +656,13 @@ void Ninja::CollisionWithBrick(const vector<LPGAMEOBJECT>* coObjects)
 				//}
 				if (nx != 0 || ny != 0)
 				{
-					isHurting = 0;
+					isHurting = false;
 				}
 			}
 
 			if (dynamic_cast<ObjectHidden*>(coEventsResult[i]->obj))
 			{
+				DebugOut(L"VA CHAM OBJ");
 				if (coEventsResult[i]->obj->GetType() == eType::OBJECT_CLIMB)
 				{
 					if (ny == -1)
@@ -598,6 +694,11 @@ void Ninja::CollisionWithBrick(const vector<LPGAMEOBJECT>* coObjects)
 					vx = 0;
 					vy = 0;
 					isClimbUp = true;
+				}
+				else if (coEventsResult[i]->obj->GetType() == eType::DOOR)
+				{
+					//if(nx!=0)
+						isGetNewStage = true;
 				}
 			}
 			else
@@ -638,7 +739,8 @@ void Ninja::CollisionWithEnemy(const vector<LPGAMEOBJECT> *coObjects)
 			}
 			if (dynamic_cast<Weapon*>(coObjects->at(i)) && ((coObjects->at(i)->GetType() != eType::BULLET) || (coObjects->at(i)->GetType() == eType::GUNNERBULLET) || (coObjects->at(i)->GetType() == eType::SWORD)))
 			{
-				listEnemy.push_back(coObjects->at(i));
+				if (dynamic_cast<Weapon*>(coObjects->at(i))->GetFinish() == false)
+					listEnemy.push_back(coObjects->at(i));
 			}
 		}
 
@@ -781,7 +883,7 @@ void Ninja::CollisionWeaponWithNinja(const vector<LPGAMEOBJECT> *coObjects)
 	listWeapon.clear();
 
 	for (UINT i = 0; i < coObjects->size(); i++)
-		if (coObjects->at(i)->GetType() == eType::SWORD || coObjects->at(i)->GetType() == eType::BULLET || coObjects->at(i)->GetType() == eType::GUNNERBULLET || coObjects->at(i)->GetType() == eType::WPWINDMILLSTAR)
+		if (coObjects->at(i)->GetType() == eType::BOM || coObjects->at(i)->GetType() == eType::SWORD || coObjects->at(i)->GetType() == eType::BULLET || coObjects->at(i)->GetType() == eType::GUNNERBULLET || coObjects->at(i)->GetType() == eType::WPWINDMILLSTAR)
 			listWeapon.push_back(coObjects->at(i));
 	for (UINT i = 0; i < listWeapon.size(); i++)
 	{
@@ -789,7 +891,7 @@ void Ninja::CollisionWeaponWithNinja(const vector<LPGAMEOBJECT> *coObjects)
 		{
 			if (!dynamic_cast<WPWindmillStar*>(listWeapon[i]))
 				SubHealth(2);
-			if(!dynamic_cast<GunnerBullet*>(listWeapon[i]))
+			if (!dynamic_cast<GunnerBullet*>(listWeapon[i]))
 				dynamic_cast<Weapon*>(listWeapon[i])->SetFinish(1);
 			//DebugOut(L"Health = %d",Health);
 		}
@@ -807,6 +909,11 @@ void Ninja::CollisionWeaponWithObj(const vector<LPGAMEOBJECT> *coObjects)
 			if (dynamic_cast<Enemy*>(coObjects->at(i))->GetStatus() == ACTIVE)
 				coEnemys.push_back(coObjects->at(i));
 		}
+		else if (coObjects->at(i)->GetType() == BOM || coObjects->at(i)->GetType() == SWORD || coObjects->at(i)->GetType() == BULLET || coObjects->at(i)->GetType() == GUNNERBULLET)
+		{
+			if(dynamic_cast<Weapon*>(coObjects->at(i))->GetFinish() == false)
+			coEnemys.push_back(coObjects->at(i));
+		}
 	}
 	for (auto weapon : subWeapon)
 	{
@@ -817,7 +924,7 @@ void Ninja::CollisionWeaponWithObj(const vector<LPGAMEOBJECT> *coObjects)
 				if (weapon->GetLastTimeAttack() > weapon->GetLastTimeAttacked()) // tránh trường hợp xét quá nhiều lần attack
 				{
 
-					if(weapon->GetType() == eType::WPWINDMILLSTAR && weapon->ableCollision(this))
+					if (weapon->GetType() == eType::WPWINDMILLSTAR && weapon->ableCollision(this))
 						weapon->SetFinish(true);
 					if (weapon->ableCollision(coEnemys.at(i)) == true)
 					{
@@ -913,6 +1020,40 @@ void Ninja::CollisionWeaponWithObj(const vector<LPGAMEOBJECT> *coObjects)
 							obj->SubHealth(1);
 							break;
 						}
+						case eType::BOM:
+						{
+							listEffect.push_back(new Effect(obj->GetX(), obj->GetY()));
+							dynamic_cast<Bom*>(obj)->SetFinish(true);
+							break;
+						}
+						case eType::SWORD:
+						{
+							listEffect.push_back(new Effect(obj->GetX(), obj->GetY()));
+							dynamic_cast<Sword*>(obj)->SetFinish(true);
+							break;
+						}
+						case eType::GUNNERBULLET:
+						{
+							listEffect.push_back(new Effect(obj->GetX(), obj->GetY()));
+							dynamic_cast<GunnerBullet*>(obj)->SetFinish(true);
+							break;
+						}
+						case eType::BULLET:
+						{
+							listEffect.push_back(new Effect(obj->GetX(), obj->GetY()));
+							dynamic_cast<Bullet*>(obj)->SetFinish(true);
+							break;
+						}
+						case eType::BOSS:
+						{
+							DebugOut(L"\nDanh Boss\tframe =%d\thealth = %d\n", weapon->GetSprite()->GetCurrentFrame(), obj->GetHealth());
+							if (weapon->isAttacked == true)
+							{
+								obj->SubHealth(1);
+								weapon->isAttacked = false;
+							}
+							break;
+						}
 						default:
 							break;
 						}
@@ -927,34 +1068,8 @@ void Ninja::CollisionWeaponWithObj(const vector<LPGAMEOBJECT> *coObjects)
 		}
 	}
 }
-void Ninja::CollisionWithItems(const vector<LPGAMEOBJECT> *coObjects)
-{
-}
 
-//void Ninja::CollisionWithObjHidden(const vector<LPGAMEOBJECT> *coObjects)
-//{
-//	vector<LPGAMEOBJECT> listObjHidden;
-//
-//	listObjHidden.clear();
-//	for (UINT i = 0; i < coObjects->size(); i++)
-//		if (dynamic_cast<ObjectHidden*>(coObjects->at(i)))
-//		{
-//			listObjHidden.push_back(coObjects->at(i));
-//		}
-//
-//	for (UINT i = 0; i < listObjHidden.size(); i++)
-//	{
-//		if (listObjHidden[i]->isCollitionObjectWithObject(this))
-//		{
-//			if (listObjHidden[i]->GetId() == 1)
-//				isClimbing = true;
-//			else if (listObjHidden[i]->GetId() == 0)
-//				isClimbUp = true;
-//		}
-//		else
-//			isClimbUp = false;
-//	}
-//}
+
 
 bool Ninja::CheckAABBActiveArea(float l, float t, float r, float b) // kiem tra va cham trong vung active cua enemy bang AABB
 {
@@ -967,27 +1082,10 @@ bool Ninja::CheckAABBActiveArea(float l, float t, float r, float b) // kiem tra 
 	return false;
 }
 
-//bool Ninja::isCollisionWithItem(Item * objItem)
-//{
-//	if (objItem->GetFinish() == true)
-//		return false;
-//
-//	float l, t, r, b;
-//	float l1, t1, r1, b1;
-//	this->GetBoundingBox(l, t, r, b);  // lấy BBOX của Ninja
-//
-//	objItem->GetBoundingBox(l1, t1, r1, b1);
-//	if (Game::GetInstance()->checkAABB(l, t, r, b, l1, t1, r1, b1) == true)
-//	{
-//		return true; // check with AABB
-//	}
-//
-//	return isCollitionObjectWithObject(objItem);
-//}
+
 
 void Ninja::Attack(eType typeWeapon)
 {
-	typeWeapon;
 	if (isAttacking)
 		return;
 	switch (typeWeapon)
@@ -1010,18 +1108,21 @@ void Ninja::Attack(eType typeWeapon)
 		}
 		break;
 	case eType::WPWINDMILLSTAR:
-		if (/*strength >= 3*/true)
+		if (strength >= 3)
 		{
-			WPWindmillStar *windmillstar = new WPWindmillStar();
-			subWeapon.push_back(windmillstar);
-			SetStrength(strength - 3);
+			if (subWeapon.back()->GetFinish()) // vũ khí đã kết thúc thì mới đc tấn công tiếp
+			{
+				WPWindmillStar *windmillstar = new WPWindmillStar();
+				subWeapon.push_back(windmillstar);
+				SetStrength(strength - 3);
 
-			isAttacking = true; // set trang thái tấn công
-			sprite->SelectFrame(0);
-			sprite->ResetTime();
-			//subWeapon>SetSpeed(0.2f * direction, 0);
-			subWeapon.back()->SetSpeed(0.5f * direction, 0);
-			subWeapon.back()->Attack(x, y, this->direction);
+				isAttacking = true; // set trang thái tấn công
+				sprite->SelectFrame(0);
+				sprite->ResetTime();
+				//subWeapon>SetSpeed(0.2f * direction, 0);
+				subWeapon.back()->SetSpeed(0.4f * direction, 0);
+				subWeapon.back()->Attack(x, y, this->direction);
+			}
 		}
 		break;
 	case eType::WPFIREWHEEL:
@@ -1056,6 +1157,7 @@ void Ninja::Attack(eType typeWeapon)
 			sprite->ResetTime();
 			subWeapon.front()->SetSpeed(0.2f * direction, 0);
 			subWeapon.front()->Attack(x, y, this->direction); // set vị trí weapon theo Ninja
+			subWeapon.front()->isAttacked = true;
 		}
 		break;
 	default:
@@ -1182,7 +1284,7 @@ void Ninja::SetDeadth()
 	ResetSit();
 	vx = 0;
 	isWalking = 0;
-
+	isGetNewStage = false;
 	//sound->Play(eSound::musicLifeLost);
 
 	Stop();
@@ -1277,7 +1379,7 @@ void Ninja::Reset()
 	TimeFreeze = 0;
 
 	isDeadth = false;
-	//TypeWeaponCollect = eType::NON_WEAPON_COLLECT;
+	TypeWeaponCollect = eType::NON_WEAPON_COLLECT;
 }
 
 bool Ninja::LoseLife()

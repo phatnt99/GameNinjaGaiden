@@ -17,12 +17,12 @@ private:
 	static WPWindmillStar *Instance;
 	//int xNinja, yNinja;
 	float v = 0;
-	bool isReturn;
-	bool isMiddle;
-	int index = 0;
+	float delta = 0;
+	float index = 0;
+	float flag = 0;
 public:
-	int status = 0;
-	float xNinja = 0;
+	float yNinja, xNinja, xStart;
+	bool isReturn;
 	WPWindmillStar();
 	virtual ~WPWindmillStar();
 	static WPWindmillStar *getInstance();

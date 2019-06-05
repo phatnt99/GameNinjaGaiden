@@ -52,7 +52,7 @@ void Bird::SetStatus(int s)
 }
 
 
-void Bird::Update(DWORD dt, float xNinja, float yNinja,int dNinja, vector<LPGAMEOBJECT>* coObjects)
+void Bird::Update(DWORD dt, float xNinja, float yNinja, int dNinja, vector<LPGAMEOBJECT>* coObjects)
 {
 
 	if (status == INACTIVE)
@@ -95,7 +95,7 @@ void Bird::Update(DWORD dt, float xNinja, float yNinja,int dNinja, vector<LPGAME
 			delta = (int)this->y - (int)yNinja;
 		else
 			delta = (int)this->y - (int)backupNinjaY;
-		
+
 		if (delta > 2) //trừ thêm tí, ninja hiện đang cao hơn bird
 		{
 			vy = -BIRD_SPEED_Y;
@@ -110,7 +110,7 @@ void Bird::Update(DWORD dt, float xNinja, float yNinja,int dNinja, vector<LPGAME
 	}
 	else // bay ngang
 	{
-		DebugOut(L"\nDIRECTION = %d\n",int(direction));
+		DebugOut(L"\nDIRECTION = %d\n", int(direction));
 		vy = 0;
 		delta = abs(xNinja - xStart) + 200;
 		if (abs(x - xStart) > delta)
@@ -239,7 +239,7 @@ void Bird::Render(Camera * camera)
 	RenderActiveBoundingBox(camera);
 
 	/*if (true)
-		RenderBoundingBox(camera);
+	RenderBoundingBox(camera);
 
 	D3DXVECTOR2 pos = camera->Transform(x, y);
 	sprite->Draw(pos.x, pos.y);*/
@@ -254,7 +254,7 @@ void Bird::GetActiveBoundingBox(float &left, float &top, float &right, float &bo
 		top = y - BIRD_ACTIVE_BBOX_HEIGHT;
 		bottom = y + BIRD_ACTIVE_BBOX_HEIGHT;
 	}
-	else if(this->id != 261) //id 261 không có bên phải
+	else if (this->id != 261) //id 261 không có bên phải
 	{
 		right = x + BIRD_ACTIVE_BBOX_WIDTH;
 		left = right - 20;
