@@ -168,6 +168,7 @@ public:
 
 	DWORD TimeWaitedAfterDeath;
 
+	int iii = 0;
 
 public:
 	Ninja(Camera* camera);

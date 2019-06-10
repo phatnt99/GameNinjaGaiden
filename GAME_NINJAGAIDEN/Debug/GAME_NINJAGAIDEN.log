@@ -1,16 +1,3 @@
-﻿  Strength.cpp
-  SceneGame.cpp
-d:\năm 2\game\gameninjagaiden\game_ninjagaiden\boss.h(21): warning C4005: 'TIME_WAIT': macro redefinition
-  d:\năm 2\game\gameninjagaiden\game_ninjagaiden\bird.h(10): note: see previous definition of 'TIME_WAIT'
-d:\năm 2\game\gameninjagaiden\game_ninjagaiden\scenegame.cpp(300): warning C4018: '<': signed/unsigned mismatch
-d:\năm 2\game\gameninjagaiden\game_ninjagaiden\scenegame.cpp(444): warning C4018: '>': signed/unsigned mismatch
-d:\năm 2\game\gameninjagaiden\game_ninjagaiden\scenegame.cpp(493): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\năm 2\game\gameninjagaiden\game_ninjagaiden\scenegame.cpp(634): warning C4018: '<': signed/unsigned mismatch
-d:\năm 2\game\gameninjagaiden\game_ninjagaiden\scenegame.cpp(636): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\năm 2\game\gameninjagaiden\game_ninjagaiden\scenegame.cpp(638): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\năm 2\game\gameninjagaiden\game_ninjagaiden\scenegame.cpp(659): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\năm 2\game\gameninjagaiden\game_ninjagaiden\scenegame.cpp(666): warning C4018: '<': signed/unsigned mismatch
-d:\năm 2\game\gameninjagaiden\game_ninjagaiden\scenegame.cpp(695): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-  Generating Code...
+﻿  Ninja.cpp
   GAME_NINJAGAIDEN.vcxproj -> D:\Năm 2\Game\GameNinjaGaiden\Debug\GAME_NINJAGAIDEN.exe
   GAME_NINJAGAIDEN.vcxproj -> D:\Năm 2\Game\GameNinjaGaiden\Debug\GAME_NINJAGAIDEN.pdb (Partial PDB)

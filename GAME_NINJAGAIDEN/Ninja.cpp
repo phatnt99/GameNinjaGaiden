@@ -101,9 +101,9 @@ void Ninja::GetBoundingBoxBrick(float & left, float & top, float & right, float 
 		}
 		else
 		{
-			left = x + 12;
+			left = x + 20;
 			top = y + 60;
-			right = left + NINJA_BBOX_WIDTH - 10;
+			right = left + NINJA_BBOX_WIDTH - 24;
 			bottom = y + NINJA_BBOX_HEIGHT;
 
 			if (isJumping)
@@ -114,9 +114,9 @@ void Ninja::GetBoundingBoxBrick(float & left, float & top, float & right, float 
 			}
 			if (isClimbing)
 			{
-				left = x + 12;
+				left = x + 20;
 				top = y + 10;
-				right = left + NINJA_BBOX_WIDTH - 15;
+				right = left + NINJA_BBOX_WIDTH - 30;
 				bottom = y + NINJA_BBOX_HEIGHT;
 			}
 		}
@@ -132,7 +132,7 @@ void Ninja::GetBoundingBoxBrick(float & left, float & top, float & right, float 
 		}
 		else
 		{
-			left = x + 30;
+			left = x + 35;
 			top = y + 10;
 			right = x + 10 + NINJA_BBOX_WIDTH;
 			bottom = y + NINJA_BBOX_HEIGHT;
@@ -144,7 +144,7 @@ void Ninja::GetBoundingBoxBrick(float & left, float & top, float & right, float 
 			}
 			if (isClimbing)
 			{
-				left = x + 30;
+				left = x + 50;
 				top = y + 10;
 				right = x + 12 + NINJA_BBOX_WIDTH;
 				bottom = y + NINJA_BBOX_HEIGHT;
@@ -155,7 +155,6 @@ void Ninja::GetBoundingBoxBrick(float & left, float & top, float & right, float 
 
 void Ninja::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	DebugOut(L"yNinja = %f\t vy = %f\n",y, vy);
 	if (Health <= 0)
 		return;
 	if (x < camera->GetBoundaryLeft() - 16)
@@ -512,7 +511,6 @@ void Ninja::Stop()
 	{
 		isSitting = 0;
 		y = y - PULL_UP_NINJA_AFTER_SITTING;
-		DebugOut(L"[STOP]\n y = %f\n", y);
 	}
 
 }
@@ -530,14 +528,14 @@ void Ninja::SetHurt(int t)
 
 	subWeapon.front()->SetFinish(true);
 
-	if (true) // ko "đang tự đi" và ko "đang trên thang" thì bật ra
+	if (!isClimbing && !isClimbUp) 
 	{
 		//if (e->nx != 0)
 		//{
 		vx = NINJA_WALKING_SPEED * -direction;
 		vy = -NINJA_VJUMP_HURTING;
 		isHurting = 1;
-		//DebugOut(L"Vy khi di chuyen = %f \n", vx);
+		DebugOut(L"VA CHAM vx = %f \n", vx);
 	//}
 
 	//if (e->ny != 0)
@@ -657,7 +655,8 @@ void Ninja::CollisionWithBrick(const vector<LPGAMEOBJECT>* coObjects)
 
 			if (dynamic_cast<ObjectHidden*>(coEventsResult[i]->obj))
 			{
-				DebugOut(L"VA CHAM OBJ");
+				if (ny == -1)
+					isHurting = false;
 				if (coEventsResult[i]->obj->GetType() == eType::OBJECT_CLIMB)
 				{
 					if (ny == -1)
@@ -697,6 +696,7 @@ void Ninja::CollisionWithBrick(const vector<LPGAMEOBJECT>* coObjects)
 					//if(nx!=0)
 						isGetNewStage = true;
 				}
+
 			}
 			else
 			{
@@ -1048,7 +1048,6 @@ void Ninja::CollisionWeaponWithObj(const vector<LPGAMEOBJECT> *coObjects)
 						}
 						case eType::BOSS:
 						{
-							DebugOut(L"\nDanh Boss\tframe =%d\thealth = %d\n", weapon->GetSprite()->GetCurrentFrame(), obj->GetHealth());
 							if (weapon->isAttacked == true)
 							{
 								obj->SubHealth(1);
@@ -1385,6 +1384,8 @@ void Ninja::Reset()
 
 	isDeadth = false;
 	isFall = false;
+	isClimbing = false;
+	isClimbUp = false;
 	TypeWeaponCollect = eType::NON_WEAPON_COLLECT;
 }
 

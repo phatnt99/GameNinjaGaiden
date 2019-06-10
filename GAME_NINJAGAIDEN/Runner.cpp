@@ -61,7 +61,7 @@ void Runner::Update(DWORD dt, float xNinja, Grid *grid, vector<LPGAMEOBJECT>* co
 		return;
 
 	int index = sprite->GetCurrentFrame();
-	//DebugOut(L"climbing = %d\n", isClimbing == true ? 1 : 0);
+	DebugOut(L"climbing = %d\n", isClimbing == true ? 1 : 0);
 	//DebugOut(L"vy=%f\ty=%f\tdy=%f\n", vy, y,dy);
 	if (isWalking)
 	{
@@ -190,7 +190,6 @@ void Runner::Update(DWORD dt, float xNinja, Grid *grid, vector<LPGAMEOBJECT>* co
 		x += dx;
 		y += dy;
 		//vy = 0.005f * dt;
-		DebugOut(L"\ny = %f\tvy =%f\tdy= %f\n",y,vy,dy);
 	}
 	else
 	{

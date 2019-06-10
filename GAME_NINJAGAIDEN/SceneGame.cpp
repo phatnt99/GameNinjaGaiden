@@ -79,7 +79,7 @@ void SceneGame::KeyState(BYTE * state)
 	//Đang bám thì không cho cử động
 	if (ninja->GetIsClimbing())
 		return;
-	if (Game::GetInstance()->IsKeyDown(DIK_UP) && Game::GetInstance()->IsKeyDown(DIK_X) && !ninja->isAttacking)
+	if (Game::GetInstance()->IsKeyDown(DIK_UP) && Game::GetInstance()->IsKeyDown(DIK_X) && !ninja->isAttacking && !ninja->GetIsClimbing())
 	{
 
 		ninja->Attack(ninja->GetTypeWeaponCollect());
@@ -202,7 +202,7 @@ void SceneGame::OnKeyDown(int KeyCode)
 	//		ninja->Attack(eType::KATANA);
 
 	if (!(Game::GetInstance()->IsKeyDown(DIK_UP) && Game::GetInstance()->IsKeyDown(DIK_X)))
-		if (Game::GetInstance()->IsKeyDown(DIK_X) && ninja->isAttacking == false)
+		if (Game::GetInstance()->IsKeyDown(DIK_X) && ninja->isAttacking == false && !ninja->GetIsClimbing())
 			ninja->Attack(eType::KATANA);
 
 	//if (ninja->isJumping && ninja->isWalking)
