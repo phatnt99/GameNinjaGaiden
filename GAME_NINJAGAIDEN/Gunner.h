@@ -7,6 +7,7 @@
 #include "Weapon.h"
 #include "GunnerBullet.h"
 #include "Grid.h"
+#include "Sound.h"
 #define GUNNER_GRAVITY 0.05f
 #define GUNNER_ACTIVE_BBOX_WIDTH 268
 #define GUNNER_ACTIVE_BBOX_HEIGHT 200
@@ -20,6 +21,7 @@
 class Gunner : public Enemy
 {
 	vector<GunnerBullet*> listWeapon;
+	Sound *sound;
 	bool isAttack;
 	int i = 1;
 public:

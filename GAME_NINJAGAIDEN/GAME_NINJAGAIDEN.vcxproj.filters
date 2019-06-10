@@ -62,6 +62,9 @@
     <Filter Include="Framework\Board">
       <UniqueIdentifier>{8d53d854-af85-4b55-b498-874e3e5af3f7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Framework\Sound">
+      <UniqueIdentifier>{84a6deb0-a6e0-4fe5-b2d8-fcfc118b36b7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMain.cpp">
@@ -217,6 +220,15 @@
     <ClCompile Include="Effect_boss.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="dxutil.cpp">
+      <Filter>Framework\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="DSutil.cpp">
+      <Filter>Framework\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>Framework\Sound</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Define.h">
@@ -366,8 +378,17 @@
     <ClInclude Include="Effect_boss.h">
       <Filter>GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="dxutil.h">
+      <Filter>Framework\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="DSutil.h">
+      <Filter>Framework\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound.h">
+      <Filter>Framework\Sound</Filter>
+    </ClInclude>
     <ClInclude Include="Soldier.h">
-      <Filter>GameObject</Filter>
+      <Filter>GameObject\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

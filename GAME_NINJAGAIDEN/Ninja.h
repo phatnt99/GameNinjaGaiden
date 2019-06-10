@@ -26,12 +26,8 @@
 #include "GunnerBullet.h"
 #include "Bullet.h"
 #include "WPWindmillStar.h"
-//#include "Sound.h"
-//#include "ThrowingAxe.h"
-//#include "Dagger.h"
-//#include "HolyWater.h"
-//#include "StopWatch.h"
-//#include "Boomerang.h"
+#include "Sound.h"
+
 
 #define NINJA_POSITION_DEFAULT  0.0f, 150.0f
 
@@ -43,7 +39,7 @@
 
 #define PULL_UP_NINJA_AFTER_SITTING 2.0f // Kéo NINJA lên 18px sau khi ngồi rồi đứng dậy, tránh overlaping do BBOX bottom thu lại khi ngồi
 
-#define NINJA_VJUMP 0.50f
+#define NINJA_VJUMP 0.40f
 #define NINJA_VJUMP_HURTING 0.5f // nhảy lúc bị đau
 #define PULL_UP_NINJA_AFTER_JUMPING 2.0f // Kéo NINJA lên 18px sau khi nhảy, tránh overlaping do BBOX bottom thu lại khi nhảy
 
@@ -51,7 +47,7 @@
 #define NINJA_GRAVITY_JUMPING 0.001f 
 #define NINJA_GRAVITY_HURTING 0.003f
 
-#define NINJA_WALKING_SPEED 0.3f //0.2f 
+#define NINJA_WALKING_SPEED 0.15f //0.2f 
 
 #define NINJA_STATE_IDLE 0
 #define NINJA_STATE_WALKING 1
@@ -116,6 +112,7 @@ class Ninja : public GameObject
 private:
 	CSprite * _sprite_deadth;
 
+	Sound * sound;
 	int strength; // strength cua ninja
 	int Lives; // số mạng của NINJA
 	int score; // điểm
@@ -147,7 +144,6 @@ private:
 
 	bool untouchable;
 	DWORD untouchable_start;
-
 	eType TypeWeaponCollect = eType::WPWINDMILLSTAR; // loại vũ khí phụ đang giữ
 
 	Camera * camera;
@@ -162,7 +158,8 @@ public:
 	bool isWalking;
 	bool isJumping;
 	bool isSitting;
-
+	bool isFall;
+	DWORD timeWait;
 
 	int directionY; // hướng đi theo trục y của NINJA
 
@@ -194,7 +191,7 @@ public:
 	void Right();
 	void Left();
 
-	void SetHurt();
+	void SetHurt(int t);
 
 	void SetStrength(int h);
 	int GetStrength();
@@ -216,7 +213,7 @@ public:
 	void SetScore(int s);
 
 	bool GetFreeze();
-	void SetFreeze(int f);
+	void SetFreeze(bool f);
 	void UpdateFreeze(DWORD dt);
 
 	void StartUntouchable();
@@ -235,6 +232,12 @@ public:
 	void SetDeadth();
 	bool GetIsDeadth();
 	void SetIsDeadth(bool b);
+
+	//FOR CHEAT
+	void GetFullHeath()
+	{
+		this->SetHealth(NINJA_DEFAULT_HEALTH);
+	}
 
 	bool GetIsClimbing() { return isClimbing; }
 	void SetIsClimbing(bool b) { isClimbing = b; }

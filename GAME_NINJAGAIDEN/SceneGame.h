@@ -22,7 +22,7 @@
 #include "Runner.h"
 #include "Boss.h"
 #include "Windmillstar.h"
-
+#include "Sound.h"
 #define GAME_TIME_MAX 150
 
 #define REGION_CREATE_PANTHER_LEFT 1090.0f
@@ -37,8 +37,7 @@
 
 #define CROSS_LIMITTIME 1000 // thời gian tối đa khi dùng Cross
 
-#define TIME_FOR_THIEF 1000
-#define TIME_WAIT_FOR_PROCESS_THIEF 2500
+#define TIME_FOR_DEATH 4000
 
 class SceneGame : public Scene
 {
@@ -49,6 +48,7 @@ private:
 	Camera *camera;
 	Grid *grid;
 	Board *board;
+	Sound * sound;
 	vector<LPGAMEOBJECT> listObj;
 	vector<Unit*> listUnit;
 	GameTime * gameTime;
@@ -63,12 +63,9 @@ private:
 	Alphabet Text;
 	bool isGameOver;
 	DWORD EndTime;
-	DWORD TimeWaitedChangeColorBackground; // thời gian đã chờ của việc thay đổi màu nền
-	DWORD LimitTimeWaitChangeColorBackground = 3000; // thời gian cần chờ để đỏi màu nền
-	DWORD timeWait;
-	float remainTime = 0;
+	float remainTime;
 	Boss *boss;
-	int count = 1;
+	int count;
 public:
 	SceneGame();
 	~SceneGame();
@@ -78,7 +75,7 @@ public:
 	void OnKeyUp(int KeyCode);
 	void LoadResources();
 
-	void InitGame(); // khởi tạo lại như chơi từ đầu
+	void InitGame(eType map = MAP1); // khởi tạo lại như chơi từ đầu
 	void ResetResource(); // reset lai resource khi simon mất 1 mạng
 
 
@@ -103,6 +100,6 @@ public:
 	void ProcessInvisibilityPotion(DWORD dt);
 	void ProcessCross(DWORD dt);
 
-	void ReplayMusicGame();
+	void ReplayMusicGame(int map);
 };
 #endif

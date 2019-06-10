@@ -26,7 +26,7 @@ public:
 
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 	virtual void Render(Camera *camera);
-	virtual void UpdatePositionFitCharacter();
+	virtual void UpdatePositionFitCharacter(int state);
 	virtual void RenderIcon(float X, float Y) = 0;
 	virtual bool ableCollision(GameObject* obj);
 	bool GetFinish();

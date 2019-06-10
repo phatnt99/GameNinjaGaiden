@@ -23,7 +23,7 @@ public:
 
 	void Attack(float X, float Y, int Direction);
 	bool ableCollision(GameObject* obj);
-	void UpdatePositionFitCharacter();
+	void UpdatePositionFitCharacter(int state);
 	void RenderIcon(float X, float Y);
 };
 

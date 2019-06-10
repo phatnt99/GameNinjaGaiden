@@ -14,13 +14,14 @@ Boss::Boss(int direction, float X, float Y, int status)
 	directX = direction;
 	texture = TextureManager::GetInstance()->GetTexture(eType::BOSS);
 	sprite = new CSprite(texture, 200);
+	sound = Sound::GetInstance();
 	isIdle = false;
 	isDeath = false;
 	isJumping = true;
 	Health = 16; // sét máu
 	type = eType::BOSS;
 	start = GetTickCount();
-	vy = 0.05f;
+	vy = 0.002f;
 }
 
 Boss::~Boss()
@@ -47,6 +48,8 @@ void Boss::SetStatus(int s)
 }
 void Boss::Update(DWORD dt, float xNinja, Grid *grid, vector<LPGAMEOBJECT>* coObjects)
 {
+	if (isFinish)
+		return;
 	if (Health == 0 && !isDeath)
 	{
 		isDeath = true;
@@ -54,6 +57,7 @@ void Boss::Update(DWORD dt, float xNinja, Grid *grid, vector<LPGAMEOBJECT>* coOb
 	}
 	if (status == INACTIVE || isDeath)
 	{
+		sound->Play(eSound::bumboss);
 		DWORD now = GetTickCount();
 		if (now - startDeath > TIME_DEATH)
 		{
@@ -155,7 +159,7 @@ void Boss::Update(DWORD dt, float xNinja, Grid *grid, vector<LPGAMEOBJECT>* coOb
 	}
 	else if (x >= 421 && isJumping)
 	{
-		vy = 0.005f;
+		vy = 0.006f;
 		isIdle = true;
 		y += vy * dt;
 	}
@@ -211,10 +215,8 @@ void Boss::Update(DWORD dt, float xNinja, Grid *grid, vector<LPGAMEOBJECT>* coOb
 			vy = 0;
 			vx = 0;
 			isJumping = false;
-
+			sound->Play(eSound::bosstouchbrick);
 		}
-		else
-			y += dy;
 	}
 	for (UINT i = 0; i < coEvents.size(); i++)
 		delete coEvents[i];

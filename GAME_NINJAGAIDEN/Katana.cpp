@@ -73,25 +73,42 @@ void Katana::Attack(float X, float Y, int Direction)
 {
 
 	Weapon::Attack(X, Y, Direction);
-	UpdatePositionFitCharacter();
+	//UpdatePositionFitCharacter();
 	sprite->SelectFrame(KATANA_ANI_START);
 	sprite->ResetTime();
 }
 
-void Katana::UpdatePositionFitCharacter()
+void Katana::UpdatePositionFitCharacter(int state)
 {
-
-	if (direction == -1)
+	if (state == 0)// đang đứng
 	{
-		this->x = x - 20;
-		this->y = y - 1;
+		if (direction == -1)
+		{
+			this->x = x - 20;
+			this->y = y - 1;
 
+		}
+		else
+		{
+			this->x = x + 20;
+			this->y = y - 1;
+		}
 	}
-	else
+	else //ngồi
 	{
-		this->x = x + 20;
-		this->y = y - 1;
+		if (direction == -1)
+		{
+			this->x = x - 20;
+			this->y = y + 10;
+
+		}
+		else
+		{
+			this->x = x + 20;
+			this->y = y + 10;
+		}
 	}
+
 }
 
 void Katana::RenderIcon(float X, float Y)

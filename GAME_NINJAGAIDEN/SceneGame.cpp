@@ -94,7 +94,14 @@ void SceneGame::KeyState(BYTE * state)
 			ninja->Jump();
 		}
 		else
-			ninja->Sit();
+		{
+			if (ninja->isAttacking)
+			{
+				ninja->SetSpeed(0, 0);
+			}
+			else
+				ninja->Sit();
+		}
 		if (Game::GetInstance()->IsKeyDown(DIK_RIGHT))
 		{
 			ninja->ResetSit();
@@ -107,7 +114,6 @@ void SceneGame::KeyState(BYTE * state)
 			ninja->Left();
 			ninja->Go();
 		}
-
 		return;
 	}
 
@@ -121,13 +127,6 @@ void SceneGame::KeyState(BYTE * state)
 	}
 
 	// giai quyet dang nhay ma danh thi van danh va co vx 
-	if (ninja->isAttacking)
-	{
-		float vx, vy;
-		ninja->GetSpeed(vx, vy);
-		//ninja->SetSpeed(0, vy);
-		return;
-	}
 
 	
 	if (Game::GetInstance()->IsKeyDown(DIK_RIGHT))
@@ -144,7 +143,18 @@ void SceneGame::KeyState(BYTE * state)
 		}
 		else
 		{
-			ninja->Stop();
+			if (ninja->isAttacking && ninja->isSitting)
+			{
+				//float vx, vy;
+				//ninja->GetSpeed(vx, vy);
+				ninja->SetSpeed(0, 0);
+			}
+			else
+			{
+				ninja->Stop();
+			}
+			//if(ninja->subWeapon.front()->GetFinish() == true)
+
 		}
 
 	}
@@ -153,15 +163,19 @@ void SceneGame::KeyState(BYTE * state)
 void SceneGame::OnKeyDown(int KeyCode)
 {
 
-	//if (ninja->GetFreeze() == true) // Đang bóng băng thì không quan tâm phím
-	//{
-	//	return;
-	//}
+	if (KeyCode == DIK_H)
+	{
+		ninja->GetFullHeath();
+	}
+
 	if (isGameOver)
 	{
 		if (KeyCode == DIK_RETURN)
 		{
-			InitGame();
+			if (StateCurrent == 3)
+				mapCurrent = MAP2;
+
+			InitGame(mapCurrent);
 			isGameOver = false;
 		}
 	}
@@ -222,6 +236,7 @@ void SceneGame::OnKeyDown(int KeyCode)
 			ninja->SetSpeed(NINJA_WALKING_SPEED * ninja->GetDirection(), -NINJA_VJUMP);
 			ninja->isJumping = 1;
 			ninja->isWalking = 1;
+			sound->Play(eSound::jump);
 		}
 		else
 		{
@@ -259,6 +274,7 @@ void SceneGame::LoadResources()
 {
 	TextureManager * textureManager = TextureManager::GetInstance();
 
+	sound = Sound::GetInstance();
 	gameTime = new GameTime();
 	TileMap = new Map();
 
@@ -270,12 +286,13 @@ void SceneGame::LoadResources()
 	InitGame();
 }
 
-void SceneGame::InitGame()
+void SceneGame::InitGame(eType map)
 {
-	LoadMap(eType::MAP3);
+	LoadMap(MAP2);
 	ninja->Init();
 
 	gameTime->SetTime(0); // đếm lại từ 0
+
 
 }
 bool FilterThief(vector<GameObject*>list, GameObject* obj)
@@ -287,6 +304,8 @@ bool FilterThief(vector<GameObject*>list, GameObject* obj)
 	}
 	return false;
 }
+
+
 void SceneGame::ResetResource()
 {
 
@@ -299,9 +318,10 @@ void SceneGame::ResetResource()
 	camera->SetAllowFollowNinja(true);
 
 	isGameOver = false;
-	//countEnemy = 0;
-	//isWaitProcessCreateThief = false;
-	//timeCreateThief = 0;
+	remainTime = 0;
+	count = 1;
+
+	ReplayMusicGame(StateCurrent);
 }
 
 
@@ -309,14 +329,56 @@ void SceneGame::Update(DWORD dt)
 {
 	if (isGameOver)
 		return;
-	//DebugOut(L"\nMAP = %d\n",mapCurrent);
+	if(GAME_TIME_MAX - gameTime->GetTime() < 10)
+		sound->Play(eSound::warningtime);
+	//hết thời gian / hết máu -> chết
 	if (gameTime->GetTime() >= GAME_TIME_MAX || ninja->GetHealth() < 1)
 	{
 		if (ninja->GetIsDeadth())
 		{
+
 			ninja->GetSprite()->SelectFrame(NINJA_DEADTH);
 
+			if (GetTickCount() - ninja->timeWait > 4000 || ninja->GetLives() - 1 < 0)
+			{
+				bool ret = ninja->LoseLife();
+
+				if (ret)
+				{
+					camera->RestorePosition();
+					camera->RestoreBoundary();
+
+					gameTime->SetTime(0);
+					if(StateCurrent == 3) // nếu đang ở màn 3 thì về màn 2
+						LoadMap(MAP2);
+					ResetResource();
+				}
+				else
+				{
+					EndTime = GetTickCount();
+					isGameOver = true;
+					sound->StopAll();
+				}
+			}
+			else
+			{
+				sound->StopAll();
+				sound->Play(eSound::loselife);
+			}
+		}
+		else
+		{
+			ninja->SetDeadth();
+			ninja->timeWait = GetTickCount();
+		}
+	}
+	//rơi xuống vực -> chết
+	else if (ninja->isFall)
+	{
+		if (GetTickCount() - ninja->timeWait > 4000 || ninja->GetLives() - 1 < 0)
+		{
 			bool ret = ninja->LoseLife();
+			ninja->GetSprite()->SelectFrame(8);
 
 			if (ret)
 			{
@@ -324,43 +386,21 @@ void SceneGame::Update(DWORD dt)
 				camera->RestoreBoundary();
 
 				gameTime->SetTime(0);
-
+				if (StateCurrent == 3) // nếu đang ở màn 3 thì về màn 2
+					LoadMap(MAP2);
 				ResetResource();
 			}
 			else
 			{
 				EndTime = GetTickCount();
-				timeWait = GetTickCount();
 				isGameOver = true;
+				sound->StopAll();
 			}
-
-			return;
 		}
 		else
 		{
-			ninja->SetDeadth();
-		}
-	}
-	//rơi xuống vực -> chết
-	else if (ninja->GetIsDeadth())
-	{
-		bool ret = ninja->LoseLife();
-		ninja->GetSprite()->SelectFrame(8);
-
-		if (ret)
-		{
-			camera->RestorePosition();
-			camera->RestoreBoundary();
-
-			gameTime->SetTime(0);
-
-			ResetResource();
-		}
-		else
-		{
-			EndTime = GetTickCount();
-			timeWait = GetTickCount();
-			isGameOver = true;
+			sound->StopAll();
+			sound->Play(eSound::loselife);
 		}
 
 		return;
@@ -377,95 +417,100 @@ void SceneGame::Update(DWORD dt)
 		ResetResource();
 		ninja->SetIsNewStage(false);
 	}
-	int count = 0;
-	listObj.clear();
-	listUnit.clear(); // lay obj co trong vung camera thong qua unit
-	grid->GetListObject(listUnit, camera);
-
-	for (UINT i = 0; i < listUnit.size(); i++)
+	else
 	{
-		LPGAMEOBJECT obj = listUnit[i]->GetObj();
-		listObj.push_back(obj);
-		if (obj->GetType() == BOSS)
-			boss = dynamic_cast<Boss*>(obj);
-	}
-	ninja->Update(dt, &listObj);
-	if (camera->AllowFollowNinja())
-		camera->SetPosition(ninja->GetX() - SCREEN_WIDTH / 2 + 30, camera->GetYCam()); // cho camera chạy theo ninja
+		listObj.clear();
+		listUnit.clear(); // lay obj co trong vung camera thong qua unit
+		grid->GetListObject(listUnit, camera);
 
-	camera->Update(dt);
-
-	gameTime->Update(dt);
-	
-
-	DWORD now = GetTickCount();
-	//DebugOut(L"now = %d \ttimeBegin = %d\n", now, timeBeginFreeze);
-	if (now - timeBeginFreeze > timeFreeze)
-	{
-		ninja->SetFreeze(0);
-		for (UINT i = 0; i < listObj.size(); i++)
+		for (UINT i = 0; i < listUnit.size(); i++)
 		{
-			LPGAMEOBJECT obj = listObj[i];
-			if (dynamic_cast<Bird*>(listObj[i]))
-			{
-				Bird *bird = dynamic_cast<Bird*>(listObj[i]);
-				bird->Update(dt, ninja->GetX(), ninja->GetY(), ninja->GetDirection(), &listObj);
-			}
-			if (dynamic_cast<Witch*>(listObj[i]))
-			{
-				Witch *witch = dynamic_cast<Witch*>(listObj[i]);
-				witch->Update(dt, ninja->GetX(), grid, &listObj);
-			}
-			if (dynamic_cast<Soldier*>(listObj[i]))
-			{
-				Soldier *soldier = dynamic_cast<Soldier*>(listObj[i]);
-				soldier->Update(dt, ninja->GetX(), grid, &listObj);
-			}
-			if (dynamic_cast<Gunner*>(listObj[i]))
-			{
-				Gunner *gunner = dynamic_cast<Gunner*>(listObj[i]);
-				gunner->Update(dt, ninja->GetX(), grid, &listObj);
-			}
-			if (dynamic_cast<Runner*>(listObj[i]))
-			{
-				Runner *runner = dynamic_cast<Runner*>(listObj[i]);
-				runner->Update(dt, ninja->GetX(), grid, &listObj);
-			}
-			if (dynamic_cast<Boss*>(listObj[i]))
-			{
-				Boss *boss = dynamic_cast<Boss*>(listObj[i]);
-				boss->Update(dt, ninja->GetX(), grid, &listObj);
-			}
-			else
-				obj->Update(dt, &listObj);
+			LPGAMEOBJECT obj = listUnit[i]->GetObj();
+			listObj.push_back(obj);
+			if (obj->GetType() == BOSS)
+				boss = dynamic_cast<Boss*>(obj);
 		}
-	}
+		ninja->Update(dt, &listObj);
+		if (camera->AllowFollowNinja())
+			camera->SetPosition(ninja->GetX() - SCREEN_WIDTH / 2 + 30, camera->GetYCam()); // cho camera chạy theo ninja
 
-	if (boss != nullptr)
-	{
-		if (boss->GetIsDeath() && remainTime == 0)
+		camera->Update(dt);
+
+		gameTime->Update(dt);
+
+
+		DWORD now = GetTickCount();
+		//DebugOut(L"now = %d \ttimeBegin = %d\n", now, timeBeginFreeze);
+		if (now - timeBeginFreeze > timeFreeze)
 		{
-			ninja->SetStrength(ninja->GetStrength() - 1);
-			if (ninja->GetStrength() == 0)
-				remainTime = GAME_TIME_MAX - gameTime->GetTime();
+			ninja->SetFreeze(0);
+			for (UINT i = 0; i < listObj.size(); i++)
+			{
+				LPGAMEOBJECT obj = listObj[i];
+				if (dynamic_cast<Bird*>(listObj[i]))
+				{
+					Bird *bird = dynamic_cast<Bird*>(listObj[i]);
+					bird->Update(dt, ninja->GetX(), ninja->GetY(), ninja->GetDirection(), &listObj);
+				}
+				if (dynamic_cast<Witch*>(listObj[i]))
+				{
+					Witch *witch = dynamic_cast<Witch*>(listObj[i]);
+					witch->Update(dt, ninja->GetX(), grid, &listObj);
+				}
+				if (dynamic_cast<Soldier*>(listObj[i]))
+				{
+					Soldier *soldier = dynamic_cast<Soldier*>(listObj[i]);
+					soldier->Update(dt, ninja->GetX(), grid, &listObj);
+				}
+				if (dynamic_cast<Gunner*>(listObj[i]))
+				{
+					Gunner *gunner = dynamic_cast<Gunner*>(listObj[i]);
+					gunner->Update(dt, ninja->GetX(), grid, &listObj);
+				}
+				if (dynamic_cast<Runner*>(listObj[i]))
+				{
+					Runner *runner = dynamic_cast<Runner*>(listObj[i]);
+					runner->Update(dt, ninja->GetX(), grid, &listObj);
+				}
+				if (dynamic_cast<Boss*>(listObj[i]))
+				{
+					Boss *boss = dynamic_cast<Boss*>(listObj[i]);
+					boss->Update(dt, ninja->GetX(), grid, &listObj);
+				}
+				else
+					obj->Update(dt, &listObj);
+			}
 		}
+		else
+			sound->Play(eSound::timefreez);
 
-		if (boss->GetIsDeath() && remainTime > 0)
+		if (boss != nullptr)
 		{
-			ninja->SetScore(ninja->GetScore() + 90);
-			remainTime -= 0.5;
-			//DebugOut(L"\nTRU CON %f\n", remainTime);
-			if (remainTime == 0)
-				remainTime = -1;
+			if (boss->GetIsDeath() && remainTime == 0)
+			{
+				ninja->SetStrength(ninja->GetStrength() - 1);
+				if (ninja->GetStrength() == 0)
+					remainTime = GAME_TIME_MAX*1.0 - gameTime->GetTime();
+			}
+
+			if (boss->GetIsDeath() && remainTime > 0)
+			{
+				sound->Play(eSound::remainingtime);
+				ninja->SetScore(ninja->GetScore() + 90);
+				remainTime -= 0.5;
+				//DebugOut(L"\nTRU CON %f\n", remainTime);
+				if (remainTime == 0)
+					remainTime = -1;
+			}
 		}
+
+
+		CheckDropItem();
+		SetInactiveEnemy();
+		UpdateGrid();
+		CheckCollision(dt);
+
 	}
-
-
-	CheckDropItem();
-	SetInactiveEnemy();
-	UpdateGrid();
-	CheckCollision(dt);
-
 
 }
 void SceneGame::CheckDropItem()
@@ -590,9 +635,9 @@ void SceneGame::SetInactiveEnemy()
 	{
 		if (!camera->checkObjectInCamera(listObj[i]->GetX(), listObj[i]->GetY(), listObj[i]->GetWidth(), listObj[i]->GetHeight()))
 		{
-			if (dynamic_cast<GunnerBullet*>(listObj[i]) && !camera->checkObjectInCamera(listObj[i]->GetX(), listObj[i]->GetY(), listObj[i]->GetWidth(), listObj[i]->GetHeight()))
+			if (dynamic_cast<Weapon*>(listObj[i]) && !camera->checkObjectInCamera(listObj[i]->GetX(), listObj[i]->GetY(), listObj[i]->GetWidth(), listObj[i]->GetHeight()))
 			{
-				dynamic_cast<GunnerBullet*>(listObj[i])->SetFinish(true);
+				dynamic_cast<Weapon*>(listObj[i])->SetFinish(true);
 			}
 			else
 			{
@@ -641,8 +686,8 @@ void SceneGame::Render()
 			listObj[i]->Render(camera);
 		}
 
-
-		ninja->Render(camera);
+		if(!ninja->isFall)
+			ninja->Render(camera);
 
 		if (remainTime > 0)
 		{
@@ -658,17 +703,16 @@ void SceneGame::Render()
 		}
 		else if (remainTime <= -1)
 		{
-			//board->Render(ninja, 3, StateCurrent, 0, boss);
+			sound->StopAll();
 			TileMap->DrawMap(camera, 0, 0, 0);
-			Text.Draw(200, 200, "GAME OVER");
+			Text.Draw(200, 200, "GAME CLEAR");
 		}
 
-	
 	}
 	else
 	{
 		//DebugOut(L"\nNOW = %d\nEND = %d\nRET =%d \n", GetTickCount(),EndTime, GetTickCount() - EndTime);
-		if (GetTickCount() - EndTime < 5000)
+		if (GetTickCount() - EndTime < 4000)
 		{
 			switch (count++)
 			{
@@ -699,40 +743,16 @@ void SceneGame::Render()
 			ninja->Render(camera);
 
 			board->Render(ninja, 3, StateCurrent, GAME_TIME_MAX - gameTime->GetTime(), boss);
+			sound->Play(eSound::loselife);
 		}
 		else
 		{
+			sound->StopAll();
 			TileMap->DrawMap(camera, 0, 0, 0);
 			Text.Draw(200, 200, "GAME OVER");
 		}
 	}
 
-	//	for (int i = 0; i < 4; i++)
-	//	{
-	//		TimeWaitedChangeColorBackground = GetTickCount();
-	//		if (TimeWaitedChangeColorBackground - timeWait >= LimitTimeWaitChangeColorBackground)
-	//		{
-	//			TimeWaited_UseCross_ChangeColorBackground = 0;
-	//			LimitTimeWait_UseCross_ChangeColorBackground = rand() % 100;
-	//		switch (i)
-	//		{
-	//		case 1:
-	//			timeWait = GetTickCount();
-	//			TileMap->DrawMap(camera, 243, 0, 200);
-	//			break;
-	//		case 2:
-	//			TileMap->DrawMap(camera, 0, 3, 189);
-	//			break;
-	//		case 3:
-	//			TileMap->DrawMap(camera, 255, 125, 34);
-	//			break;
-	//		case 4:
-	//			TileMap->DrawMap(camera, 193, 47, 0);
-	//			break;
-	//		}
-
-	//	}
-	//}
 	
 }
 
@@ -791,7 +811,7 @@ void SceneGame::LoadMap(eType x)
 		camera->SetAllowFollowNinja(true);
 
 		ninja->SetPosition(50, 309);
-		ninja->SetPositionBackup(NINJA_POSITION_DEFAULT);
+		ninja->SetPositionBackup(50, 309);
 		StateCurrent = 3;
 		break;
 	}
@@ -866,10 +886,28 @@ void SceneGame::CollisionWithItems(DWORD dt)
 				default:
 					break;
 				}
+				sound->Play(eSound::soundCollectItem);
 			}
 		}
 	}
-	//DebugOut(L"strenth = %d\tscore = %d\thelth = %d\n", ninja->GetStrength(), ninja->GetScore(), ninja->GetHealth());
+}
+
+void SceneGame::ReplayMusicGame(int map)
+{
+	sound->StopAll();// tắt hết nhạc
+	switch (map)
+	{
+	case 1:
+		sound->Play(eSound::musicState1, true); // mở lại nhạc nền
+		break;
+	case 2:
+		sound->Play(eSound::musicState2, true); // mở lại nhạc nền
+		break;
+	case 3:
+		sound->Play(eSound::musicState3, true); // mở lại nhạc nền
+		break;
+
+	}
 
 }
 

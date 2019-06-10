@@ -7,6 +7,7 @@
 #include "Weapon.h"
 #include "Bullet.h"
 #include "Grid.h"
+#include "Sound.h"
 #define SOLDIER_SPEED_X 0.09f
 #define SOLDIER_GRAVITY 0.05f
 #define SOLDIER_ACTIVE_BBOX_WIDTH 268
@@ -24,6 +25,7 @@ class Soldier : public Enemy
 {
 	int countAttack;
 	vector<Bullet*> listWeapon;
+	Sound *sound;
 	bool isWalking;
 	bool isAttack;
 	float borderLeft, borderRight;

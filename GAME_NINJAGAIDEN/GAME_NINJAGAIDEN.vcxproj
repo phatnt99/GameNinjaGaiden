@@ -77,6 +77,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxerr.lib;dsound.lib;dxguid.lib;winmm.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -87,6 +88,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -109,6 +111,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -128,6 +131,8 @@
     <ClCompile Include="Butterfly.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="debug.cpp" />
+    <ClCompile Include="DSutil.cpp" />
+    <ClCompile Include="dxutil.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="Effect_boss.cpp" />
     <ClCompile Include="Firewheel.cpp" />
@@ -152,6 +157,7 @@
     <ClCompile Include="Dog.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Soldier.cpp" />
+    <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Strength.cpp" />
     <ClCompile Include="Sword.cpp" />
@@ -182,6 +188,8 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="Define.h" />
+    <ClInclude Include="DSutil.h" />
+    <ClInclude Include="dxutil.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="Effect_boss.h" />
     <ClInclude Include="Enemy.h" />
@@ -197,6 +205,7 @@
     <ClInclude Include="Restore.h" />
     <ClInclude Include="Runner.h" />
     <ClInclude Include="Soldier.h" />
+    <ClInclude Include="Sound.h" />
     <ClInclude Include="Strength.h" />
     <ClInclude Include="Sword.h" />
     <ClInclude Include="TheBird.h" />

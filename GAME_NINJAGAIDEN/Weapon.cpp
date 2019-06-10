@@ -60,7 +60,7 @@ void Weapon::Render(Camera * camera)
 		sprite->DrawFlipX(pos.x, pos.y);
 }
 
-void Weapon::UpdatePositionFitCharacter()
+void Weapon::UpdatePositionFitCharacter(int state)
 {
 }
 

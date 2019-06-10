@@ -8,6 +8,7 @@
 #include "Bom.h"
 #include "Grid.h"
 #include "Effect_boss.h"
+#include "Sound.h"
 #define BOSS_SPEED_X 0.09f
 #define BOSS_GRAVITY 0.009f
 #define BOSS_ACTIVE_BBOX_WIDTH 500
@@ -31,6 +32,7 @@ class Boss : public Enemy
 	int count = 0;
 	DWORD start;
 	DWORD startDeath;
+	Sound *sound;
 	list<Effect_boss*> listEffect;
 public:
 	Boss(int direction, float X, float Y, int status);

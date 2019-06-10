@@ -31,6 +31,7 @@ void Dog::SetStatus(int s)
 	switch (this->status)
 	{
 	case ACTIVE:
+		Health = 1;
 		isJumping = true;
 		break;
 	case DEATH:

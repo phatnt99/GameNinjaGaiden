@@ -13,6 +13,7 @@ Gunner::Gunner(int direction, float X, float Y, int status)
 	backupDirection = direction;
 	texture = TextureManager::GetInstance()->GetTexture(eType::GUNNER);
 	sprite = new CSprite(texture, 200);
+	sound = Sound::GetInstance();
 	Health = 1; // sét máu
 	type = eType::GUNNER;
 	vy = 0.05f;
@@ -76,6 +77,7 @@ void Gunner::Update(DWORD dt, float xNinja, Grid *grid, vector<LPGAMEOBJECT>* co
 				bullet->Attack(x, y, this->direction);
 				listWeapon.push_back(bullet);
 				Unit * unit = new Unit(grid, bullet, bullet->GetX(), bullet->GetY());
+				sound->Play(eSound::oneshot);
 			}
 			
 		}
