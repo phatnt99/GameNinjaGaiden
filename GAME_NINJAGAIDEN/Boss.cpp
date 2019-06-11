@@ -247,8 +247,8 @@ void Boss::Render(Camera * camera)
 			bom->Render(camera);
 	}
 
-	if (true)
-		RenderBoundingBox(camera);
+	//if (true)
+	//	RenderBoundingBox(camera);
 	for (auto obj : listEffect)
 	{
 		if (!dynamic_cast<Effect_boss*>(obj)->IsFinish())

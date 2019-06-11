@@ -43,7 +43,7 @@ void TheBird::Render(Camera * camera)
 	if (status == INACTIVE)
 		return;
 
-	RenderBoundingBox(camera);
+	//RenderBoundingBox(camera);
 
 	D3DXVECTOR2 pos = camera->Transform(x, y);
 	sprite->Draw(pos.x, pos.y);

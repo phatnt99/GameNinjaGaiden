@@ -59,7 +59,7 @@ void Katana::Render(Camera * camera)
 		sprite->Draw(pos.x, pos.y);
 	else
 		sprite->DrawFlipX(pos.x, pos.y);
-	RenderBoundingBox(camera);
+	//RenderBoundingBox(camera);
 }
 
 bool Katana::ableCollision(GameObject* obj)

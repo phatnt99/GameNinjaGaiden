@@ -26,18 +26,18 @@ void Board::Render(Ninja * ninja, int state1, int state2, int RemainingTime, Bos
 	sprite->Draw(x, y);
 
 	//điểm
-	alpha.Draw(x + 161, y + 30, FillNumber(std::to_string(ninja->GetScore()), 6));
+	alpha.Draw(x + 161, y + 32, FillNumber(std::to_string(ninja->GetScore()), 6));
 
-	alpha.Draw(x + 161, y + 48, FillNumber(std::to_string(RemainingTime), 3));
+	alpha.Draw(x + 161, y + 50, FillNumber(std::to_string(RemainingTime), 3));
 
-	alpha.Draw(x + 392, y + 30, FillNumber(std::to_string(state1), 1));
+	alpha.Draw(x + 392, y + 32, FillNumber(std::to_string(state1), 1));
 
-	alpha.Draw(x + 427, y + 30, FillNumber(std::to_string(state2), 1));
+	alpha.Draw(x + 427, y + 32, FillNumber(std::to_string(state2), 1));
 
 	//số lượng strength
-	alpha.Draw(x + 178, y + 65, FillNumber(std::to_string(ninja->GetStrength()), 2)); 
+	alpha.Draw(x + 178, y + 67, FillNumber(std::to_string(ninja->GetStrength()), 2)); 
 	
-	alpha.Draw(x + 90, y + 65, FillNumber(std::to_string(ninja->GetLives()), 2)); // số mạng sông
+	alpha.Draw(x + 90, y + 67, FillNumber(std::to_string(ninja->GetLives()), 2)); // số mạng sông
 
 
 	int BloodBoss = 16;
@@ -48,19 +48,20 @@ void Board::Render(Ninja * ninja, int state1, int state2, int RemainingTime, Bos
 			BloodBoss = 1;
 	}
 
+
 	boardHealth->Draw(ninja->GetHealth(), BloodBoss);
 
 	// vẽ icon vũ khí phụ
 	switch (ninja->GetTypeWeaponCollect())
 	{
 	case eType::WPTHROWINGSTAR:
-		WPThrowingStar::getInstance()->RenderIcon(x + 229, y + 52);
+		WPThrowingStar::getInstance()->RenderIcon(x + 232, y + 51);
 		break;
 	case eType::WPFIREWHEEL:
-		WPFireWheel::getInstance()->RenderIcon(x + 229, y + 52);
+		WPFireWheel::getInstance()->RenderIcon(x + 232, y + 51);
 		break;
 	case eType::WPWINDMILLSTAR:
-		WPWindmillStar::getInstance()->RenderIcon(x + 229, y + 52);
+		WPWindmillStar::getInstance()->RenderIcon(x + 232, y + 51);
 		break;
 	default:
 		break;

@@ -18,8 +18,8 @@ Brick::Brick(float X, float Y, int W, int H)
 
 void Brick::Render(Camera * camera)
 {
-	if (true)
-		RenderBoundingBox(camera);
+	//if (true)
+	//	RenderBoundingBox(camera);
 
 
 

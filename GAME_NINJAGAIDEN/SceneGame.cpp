@@ -95,20 +95,21 @@ void SceneGame::KeyState(BYTE * state)
 		}
 		else
 		{
-			if (ninja->isAttacking)
+			if (ninja->isAttacking) //đứng mà đang đánh thì đánh xong mới dc ngồi
+
 			{
 				ninja->SetSpeed(0, 0);
 			}
 			else
 				ninja->Sit();
 		}
-		if (Game::GetInstance()->IsKeyDown(DIK_RIGHT))
+		if (Game::GetInstance()->IsKeyDown(DIK_RIGHT) && !ninja->isAttacking)
 		{
 			ninja->ResetSit();
 			ninja->Right();
 			ninja->Go();
 		}
-		if (Game::GetInstance()->IsKeyDown(DIK_LEFT))
+		if (Game::GetInstance()->IsKeyDown(DIK_LEFT) && !ninja->isAttacking)
 		{
 			ninja->ResetSit();
 			ninja->Left();
@@ -127,19 +128,54 @@ void SceneGame::KeyState(BYTE * state)
 	}
 
 	// giai quyet dang nhay ma danh thi van danh va co vx 
-
+	//if (ninja->isAttacking)
+	//{
+	//	return;
+	//}
 	
 	if (Game::GetInstance()->IsKeyDown(DIK_RIGHT))
 	{
-		ninja->Right();
-		ninja->Go();
+		if (!ninja->isJumping && !ninja->isAttacking || ninja->isJumping)
+		{
+			if (ninja->isJumping && ninja->GetDirection() == 1)
+			{
+				ninja->Right();
+				ninja->Go();
+			}
+			else if (ninja->isJumping && ninja->GetDirection() == -1)
+			{
+				ninja->Right();
+				ninja->Go(0.09f);
+			}
+			else
+			{
+				ninja->Right();
+				ninja->Go();
+			}
+		}
 	}
 	else
 	{
 		if (Game::GetInstance()->IsKeyDown(DIK_LEFT))
 		{
-			ninja->Left();
-			ninja->Go();
+			if (!ninja->isJumping && !ninja->isAttacking || ninja->isJumping)
+			{
+				if (ninja->isJumping && ninja->GetDirection() == -1)
+				{
+					ninja->Left();
+					ninja->Go();
+				}
+				else if (ninja->isJumping && ninja->GetDirection() == 1)
+				{
+					ninja->Left();
+					ninja->Go(0.09f);
+				}
+				else
+				{
+					ninja->Left();
+					ninja->Go();
+				}
+			}
 		}
 		else
 		{
@@ -288,7 +324,7 @@ void SceneGame::LoadResources()
 
 void SceneGame::InitGame(eType map)
 {
-	LoadMap(MAP2);
+	LoadMap(map);
 	ninja->Init();
 
 	gameTime->SetTime(0); // đếm lại từ 0
@@ -320,6 +356,7 @@ void SceneGame::ResetResource()
 	isGameOver = false;
 	remainTime = 0;
 	count = 1;
+	boss = NULL;
 
 	ReplayMusicGame(StateCurrent);
 }
@@ -488,9 +525,13 @@ void SceneGame::Update(DWORD dt)
 		{
 			if (boss->GetIsDeath() && remainTime == 0)
 			{
-				ninja->SetStrength(ninja->GetStrength() - 1);
 				if (ninja->GetStrength() == 0)
+				{
+					ninja->SetScore(ninja->GetScore() + 6000); //điểm kill boss
 					remainTime = GAME_TIME_MAX*1.0 - gameTime->GetTime();
+				}
+				else
+					ninja->SetStrength(ninja->GetStrength() - 1);
 			}
 
 			if (boss->GetIsDeath() && remainTime > 0)

@@ -9,7 +9,7 @@
 #include "Grid.h"
 #include "Brick.h"
 #include "ObjectHidden.h"
-#define RUNNER_SPEED_X 0.17f
+#define RUNNER_SPEED_X 0.24f
 #define RUNNER_GRAVITY 0.008f
 #define RUNNER_ACTIVE_BBOX_WIDTH 268
 #define RUNNER_ACTIVE_BBOX_HEIGHT 200

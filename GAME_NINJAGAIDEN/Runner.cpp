@@ -103,6 +103,7 @@ void Runner::Update(DWORD dt, float xNinja, Grid *grid, vector<LPGAMEOBJECT>* co
 	if (isJumping)
 	{
 		vy += 0.001f*dt;
+		vx = 0.17f;
 
 	}
 	else
@@ -259,8 +260,8 @@ void Runner::Render(Camera * camera)
 	else
 		sprite->DrawFlipX(pos.x, pos.y);
 
-	if (true)
-		RenderBoundingBox(camera);
+	//if (true)
+	//	RenderBoundingBox(camera);
 	//if (Health <= 0)
 	//	return;
 

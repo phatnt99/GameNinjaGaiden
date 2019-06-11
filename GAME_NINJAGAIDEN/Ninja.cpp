@@ -32,7 +32,7 @@ void Ninja::GetBoundingBox(float & left, float & top, float & right, float & bot
 			left = x + 12;
 			top = y + 20;
 			right = x + NINJA_BBOX_WIDTH;
-			bottom = y + NINJA_BBOX_SITTING_HEIGHT;
+			bottom = y + NINJA_BBOX_SITTING_HEIGHT - 3;
 		}
 		else
 		{
@@ -62,7 +62,7 @@ void Ninja::GetBoundingBox(float & left, float & top, float & right, float & bot
 			left = x + 20;
 			top = y + 20;
 			right = x + 12 + NINJA_BBOX_WIDTH;
-			bottom = y + NINJA_BBOX_SITTING_HEIGHT;
+			bottom = y + NINJA_BBOX_SITTING_HEIGHT - 3;
 		}
 		else
 		{
@@ -97,7 +97,7 @@ void Ninja::GetBoundingBoxBrick(float & left, float & top, float & right, float 
 			left = x + 12;
 			top = y + 60;
 			right = x + NINJA_BBOX_WIDTH;
-			bottom = y + NINJA_BBOX_SITTING_HEIGHT;
+			bottom = y + NINJA_BBOX_SITTING_HEIGHT - 3;
 		}
 		else
 		{
@@ -128,7 +128,7 @@ void Ninja::GetBoundingBoxBrick(float & left, float & top, float & right, float 
 			left = x + 20;
 			top = y + 20;
 			right = x + 12 + NINJA_BBOX_WIDTH;
-			bottom = y + NINJA_BBOX_SITTING_HEIGHT;
+			bottom = y + NINJA_BBOX_SITTING_HEIGHT - 3;
 		}
 		else
 		{
@@ -304,7 +304,8 @@ void Ninja::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 
 		/* Update về sprite */
-
+		if (isSitting) //đảm bảo ninja không rớt
+			vy = 0;
 		GameObject::Update(dt);
 		//if(isWalking == true)
 		//	x += dx;
@@ -390,8 +391,8 @@ void Ninja::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void Ninja::Render(Camera* camera)
 {
-	if (true)
-		RenderBoundingBox(camera);
+	//if (true)
+	//	RenderBoundingBox(camera);
 
 	D3DXVECTOR2 pos = camera->Transform(x, y);
 
@@ -442,10 +443,9 @@ void Ninja::Right()
 
 }
 
-void Ninja::Go()
+void Ninja::Go(float Vx)
 {
-
-	vx = NINJA_WALKING_SPEED * direction;
+	vx = Vx * direction;
 	isWalking = 1;
 
 }
@@ -556,6 +556,11 @@ void Ninja::SetHurt(int t)
 		sound->Play(eSound::touchEnemy);
 		SubHealth(1); // chạm enemy -1 máu
 	}
+	else if (t == 1) //weapon enemy
+	{
+		sound->Play(eSound::touchEnemy);
+		SubHealth(2);
+	}
 	else//boss
 	{
 		sound->Play(eSound::touchboss);
@@ -599,7 +604,7 @@ void Ninja::CollisionWithBrick(const vector<LPGAMEOBJECT>* coObjects)
 
 	for (UINT i = 0; i < coObjects->size(); i++)
 	{
-		if (coObjects->at(i)->GetType() == eType::BRICK || coObjects->at(i)->GetType() == eType::OBJECT_CLIMB || coObjects->at(i)->GetType() == eType::OBJECT_CLIMBUP || coObjects->at(i)->GetType() == eType::DOOR)
+		if (coObjects->at(i)->GetType() == eType::BRICK || coObjects->at(i)->GetType() == eType::OBJECT_CLIMB || coObjects->at(i)->GetType() == eType::OBJECT_CLIMBUP || coObjects->at(i)->GetType() == eType::DOOR || coObjects->at(i)->GetId() == 141) //obj runner mà ninja sẽ phải chạm để nhảy
 		{
 
 			listEnemy.push_back(coObjects->at(i));
@@ -696,6 +701,30 @@ void Ninja::CollisionWithBrick(const vector<LPGAMEOBJECT>* coObjects)
 					//if(nx!=0)
 						isGetNewStage = true;
 				}
+				else if (coEventsResult[i]->obj->GetId() == 141)
+				{
+					if (ny == -1)
+					{
+
+						vy = 0;
+						if (isJumping)
+						{
+							isJumping = false;
+							y = y - PULL_UP_NINJA_AFTER_JUMPING;
+						}
+						isCollisionAxisYWithBrick = true;
+					}
+					else
+					{
+						y += dy;
+						isCollisionAxisYWithBrick = true;
+					}
+
+					if (nx != 0 || ny != 0)
+					{
+						isHurting = false;
+					}
+				}
 
 			}
 			else
@@ -734,18 +763,18 @@ void Ninja::CollisionWithEnemy(const vector<LPGAMEOBJECT> *coObjects)
 				if (dynamic_cast<Enemy*>(coObjects->at(i))->GetStatus() != INACTIVE)
 					listEnemy.push_back(coObjects->at(i));
 			}
-			if (dynamic_cast<Weapon*>(coObjects->at(i)) && ((coObjects->at(i)->GetType() != eType::BULLET) || (coObjects->at(i)->GetType() == eType::GUNNERBULLET) || (coObjects->at(i)->GetType() == eType::SWORD)))
-			{
-				if (dynamic_cast<Weapon*>(coObjects->at(i))->GetFinish() == false)
-					listEnemy.push_back(coObjects->at(i));
-			}
+			//if (dynamic_cast<Weapon*>(coObjects->at(i)) && ((coObjects->at(i)->GetType() != eType::BULLET) || (coObjects->at(i)->GetType() == eType::GUNNERBULLET) || (coObjects->at(i)->GetType() == eType::SWORD)))
+			//{
+			//	if (dynamic_cast<Weapon*>(coObjects->at(i))->GetFinish() == false)
+			//		listEnemy.push_back(coObjects->at(i));
+			//}
 		}
 
 		for (UINT i = 0; i < listEnemy.size(); i++)
 		{
 			if (listEnemy[i]->isCollitionObjectWithObject(this))
 			{
-				SetHurt(listEnemy[i]->GetType() == BOSS ? 1 : 0);
+				SetHurt(listEnemy[i]->GetType() == BOSS ? 2 : 0);
 			}
 		}
 	}
@@ -873,26 +902,37 @@ void Ninja::CollisionWithEnemyArea(const vector<LPGAMEOBJECT>* coObjects)
 }
 void Ninja::CollisionWeaponWithNinja(const vector<LPGAMEOBJECT> *coObjects)
 {
-	if (untouchable == true)
+	if (isFreeze)
 		return;
-	vector<LPGAMEOBJECT> listWeapon;
-
-	listWeapon.clear();
-
-	for (UINT i = 0; i < coObjects->size(); i++)
-		if (coObjects->at(i)->GetType() == eType::BOM || coObjects->at(i)->GetType() == eType::SWORD || coObjects->at(i)->GetType() == eType::BULLET || coObjects->at(i)->GetType() == eType::GUNNERBULLET || coObjects->at(i)->GetType() == eType::WPWINDMILLSTAR)
-			listWeapon.push_back(coObjects->at(i));
-	for (UINT i = 0; i < listWeapon.size(); i++)
+	if (GetTickCount() - untouchable_start > NINJA_UNTOUCHABLE_TIME)
 	{
-		if (listWeapon[i]->isCollitionObjectWithObject(this) && dynamic_cast<Weapon*>(listWeapon[i])->GetFinish() == false)
+		untouchable_start = 0;
+		untouchable = false;
+	}
+	if (untouchable == false)
+	{
+		vector<LPGAMEOBJECT> listWeapon;
+
+		listWeapon.clear();
+
+		for (UINT i = 0; i < coObjects->size(); i++)
+			if (coObjects->at(i)->GetType() == eType::BOM || coObjects->at(i)->GetType() == eType::SWORD || coObjects->at(i)->GetType() == eType::BULLET || coObjects->at(i)->GetType() == eType::GUNNERBULLET || coObjects->at(i)->GetType() == eType::WPWINDMILLSTAR)
+				listWeapon.push_back(coObjects->at(i));
+		for (UINT i = 0; i < listWeapon.size(); i++)
 		{
-			if (!dynamic_cast<WPWindmillStar*>(listWeapon[i]))
-				SubHealth(2);
-			if (!dynamic_cast<GunnerBullet*>(listWeapon[i]))
-				dynamic_cast<Weapon*>(listWeapon[i])->SetFinish(1);
-			//DebugOut(L"Health = %d",Health);
+			if (listWeapon[i]->isCollitionObjectWithObject(this) && dynamic_cast<Weapon*>(listWeapon[i])->GetFinish() == false)
+			{
+				if (!dynamic_cast<WPWindmillStar*>(listWeapon[i]))
+				{
+					SetHurt(1);
+				}
+				if (!dynamic_cast<GunnerBullet*>(listWeapon[i]))
+					dynamic_cast<Weapon*>(listWeapon[i])->SetFinish(1);
+				//DebugOut(L"Health = %d",Health);
+			}
 		}
 	}
+
 }
 
 void Ninja::CollisionWeaponWithObj(const vector<LPGAMEOBJECT> *coObjects)
@@ -932,10 +972,6 @@ void Ninja::CollisionWeaponWithObj(const vector<LPGAMEOBJECT> *coObjects)
 						{
 						case eType::BUTTERFLY:
 						{
-							//if (dynamic_cast<Enemy*>(coEnemys->at(i))->GetStatus() == ACTIVE)
-							//{
-
-							//}
 							obj->SubHealth(1);
 							break;
 						}
@@ -950,12 +986,10 @@ void Ninja::CollisionWeaponWithObj(const vector<LPGAMEOBJECT> *coObjects)
 						}
 						case eType::THIEF:
 						{
-							//if (dynamic_cast<Enemy*>(coObjects->at(i))->GetStatus() == ACTIVE)
-							//{
 							listEffect.push_back(new Effect(obj->GetX(), obj->GetY()));
 							sound->Play(eSound::bum);
-							//}
 							obj->SubHealth(1);
+							score += 100;
 							break;
 						}
 						case eType::WITCH:
@@ -966,16 +1000,19 @@ void Ninja::CollisionWeaponWithObj(const vector<LPGAMEOBJECT> *coObjects)
 							sound->Play(eSound::bum);
 							//}
 							obj->SubHealth(1);
+							score += 300;
+
 							break;
 						}
 						case eType::DOG:
 						{
 							//if (dynamic_cast<Enemy*>(coObjects->at(i))->GetStatus() == ACTIVE)
 							//{
-							listEffect.push_back(new Effect(obj->GetX(), obj->GetY()));
+							listEffect.push_back(new Effect(obj->GetX(), obj->GetY() - 30));
 							sound->Play(eSound::bum);
 							//}
 							obj->SubHealth(1);
+							score += 200;
 							break;
 						}
 						case eType::SOLDIER:
@@ -986,6 +1023,7 @@ void Ninja::CollisionWeaponWithObj(const vector<LPGAMEOBJECT> *coObjects)
 							sound->Play(eSound::bum);
 							/*							}*/
 							obj->SubHealth(1);
+							score += 200;
 							break;
 						}
 						case eType::GUNNER:
@@ -996,6 +1034,7 @@ void Ninja::CollisionWeaponWithObj(const vector<LPGAMEOBJECT> *coObjects)
 							sound->Play(eSound::bum);
 							/*							}*/
 							obj->SubHealth(1);
+							score += 200;
 							break;
 						}
 						case eType::RUNNER:
@@ -1006,6 +1045,7 @@ void Ninja::CollisionWeaponWithObj(const vector<LPGAMEOBJECT> *coObjects)
 							sound->Play(eSound::bum);
 							/*							}*/
 							obj->SubHealth(1);
+							score += 300;
 							break;
 						}
 						case eType::BIRD:
@@ -1016,6 +1056,7 @@ void Ninja::CollisionWeaponWithObj(const vector<LPGAMEOBJECT> *coObjects)
 							sound->Play(eSound::bum);
 							//}
 							obj->SubHealth(1);
+							score += 300;
 							break;
 						}
 						case eType::BOM:
@@ -1023,6 +1064,7 @@ void Ninja::CollisionWeaponWithObj(const vector<LPGAMEOBJECT> *coObjects)
 							listEffect.push_back(new Effect(obj->GetX(), obj->GetY()));
 							sound->Play(eSound::bum);
 							dynamic_cast<Bom*>(obj)->SetFinish(true);
+							score += 100;
 							break;
 						}
 						case eType::SWORD:
@@ -1030,6 +1072,7 @@ void Ninja::CollisionWeaponWithObj(const vector<LPGAMEOBJECT> *coObjects)
 							listEffect.push_back(new Effect(obj->GetX(), obj->GetY()));
 							sound->Play(eSound::bum);
 							dynamic_cast<Sword*>(obj)->SetFinish(true);
+							score += 100;
 							break;
 						}
 						case eType::GUNNERBULLET:
@@ -1037,6 +1080,7 @@ void Ninja::CollisionWeaponWithObj(const vector<LPGAMEOBJECT> *coObjects)
 							listEffect.push_back(new Effect(obj->GetX(), obj->GetY()));
 							sound->Play(eSound::bum);
 							dynamic_cast<GunnerBullet*>(obj)->SetFinish(true);
+							score += 200;
 							break;
 						}
 						case eType::BULLET:
@@ -1044,6 +1088,7 @@ void Ninja::CollisionWeaponWithObj(const vector<LPGAMEOBJECT> *coObjects)
 							listEffect.push_back(new Effect(obj->GetX(), obj->GetY()));
 							sound->Play(eSound::bum);
 							dynamic_cast<Bullet*>(obj)->SetFinish(true);
+							score += 100;
 							break;
 						}
 						case eType::BOSS:
@@ -1104,19 +1149,19 @@ void Ninja::Attack(eType typeWeapon)
 			sprite->SelectFrame(0);
 			sprite->ResetTime();
 			//subWeapon>SetSpeed(0.2f * direction, 0);
-			subWeapon.back()->SetSpeed(0.2f * direction, 0);
+			subWeapon.back()->SetSpeed(0.4f * direction, 0);
 			subWeapon.back()->Attack(x, y, this->direction);
 			sound->Play(eSound::throwingstar);
 		}
 		break;
 	case eType::WPWINDMILLSTAR:
-		if (strength >= 3)
+		if (strength >= 5)
 		{
 			if (subWeapon.back()->GetFinish()) // vũ khí đã kết thúc thì mới đc tấn công tiếp
 			{
 				WPWindmillStar *windmillstar = new WPWindmillStar();
 				subWeapon.push_back(windmillstar);
-				SetStrength(strength - 3);
+				SetStrength(strength - 5);
 
 				isAttacking = true; // set trang thái tấn công
 				sprite->SelectFrame(0);
@@ -1129,7 +1174,7 @@ void Ninja::Attack(eType typeWeapon)
 		}
 		break;
 	case eType::WPFIREWHEEL:
-		if (strength >= 3)
+		if (strength >= 5)
 		{
 			for (int i = 0; i < 3; i++)
 			{
@@ -1145,7 +1190,7 @@ void Ninja::Attack(eType typeWeapon)
 			}
 			//DebugOut(L"strength = %d\n", strength);
 			sound->Play(eSound::firewheel);
-			SetStrength(strength - 3);
+			SetStrength(strength - 5);
 
 		}
 		break;
@@ -1358,7 +1403,7 @@ void Ninja::Init()
 {
 	Health = NINJA_DEFAULT_HEALTH; // Ninja dính 16 phát là chết
 	Lives = NINJA_DEFAULT_LIVES;
-	strength = NINJA_DEFAULT_STRENGTH + 100;
+	strength = NINJA_DEFAULT_STRENGTH;
 	score = NINJA_DEFAULT_SCORE;
 
 	Reset();
@@ -1386,6 +1431,8 @@ void Ninja::Reset()
 	isFall = false;
 	isClimbing = false;
 	isClimbUp = false;
+	score = 0;
+
 	TypeWeaponCollect = eType::NON_WEAPON_COLLECT;
 }
 
@@ -1396,7 +1443,7 @@ bool Ninja::LoseLife()
 
 	Health = NINJA_DEFAULT_HEALTH;
 	Lives = Lives - 1;
-
+	strength > 9 ? strength -= 9 : strength = 0;
 
 	Reset();
 

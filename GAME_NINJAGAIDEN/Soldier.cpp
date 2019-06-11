@@ -269,8 +269,8 @@ void Soldier::Render(Camera * camera)
 			bullet->Render(camera);
 	}
 
-	if (true)
-		RenderBoundingBox(camera);
+	//if (true)
+	//	RenderBoundingBox(camera);
 	//if (Health <= 0)
 	//	return;
 

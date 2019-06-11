@@ -45,6 +45,7 @@ void Gunner::SetStatus(int s)
 }
 void Gunner::Update(DWORD dt, float xNinja, Grid *grid, vector<LPGAMEOBJECT>* coObjects)
 {
+	DebugOut(L"\nstatus = %d\n", status == ACTIVE ? 1 : 0);
 	if (status == INACTIVE)
 		return;
 	if (this->x < xNinja)
@@ -179,8 +180,8 @@ void Gunner::Render(Camera * camera)
 			bullet->Render(camera);
 	}
 
-	if (true)
-		RenderBoundingBox(camera);
+	//if (true)
+	//	RenderBoundingBox(camera);
 	//if (Health <= 0)
 	//	return;
 

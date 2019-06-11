@@ -50,5 +50,5 @@ void ObjectHidden::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void ObjectHidden::Render(Camera * camera)
 {
 
-		RenderBoundingBox(camera);
+		//RenderBoundingBox(camera);
 }

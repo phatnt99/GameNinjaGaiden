@@ -121,8 +121,8 @@ void Thief::Render(Camera * camera)
 	else
 		sprite->DrawFlipX(pos.x, pos.y);
 
-	if (true)
-		RenderBoundingBox(camera);
+	//if (true)
+	//	RenderBoundingBox(camera);
 	//if (Health <= 0)
 	//	return;
 	

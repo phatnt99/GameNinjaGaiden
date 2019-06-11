@@ -250,8 +250,8 @@ void Witch::Render(Camera * camera)
 	}
 	
 
-	if (true)
-		RenderBoundingBox(camera);
+	//if (true)
+	//	RenderBoundingBox(camera);
 }
 
 void Witch::GetActiveBoundingBox(float &left, float &top, float &right, float &bottom, int id)

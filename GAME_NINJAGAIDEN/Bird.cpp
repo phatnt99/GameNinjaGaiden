@@ -235,8 +235,8 @@ void Bird::Render(Camera * camera)
 		sprite->DrawFlipX(pos.x, pos.y);
 
 
-	RenderBoundingBox(camera);
-	RenderActiveBoundingBox(camera);
+	//RenderBoundingBox(camera);
+	//RenderActiveBoundingBox(camera);
 
 	/*if (true)
 	RenderBoundingBox(camera);

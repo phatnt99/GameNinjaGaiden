@@ -39,7 +39,7 @@
 
 #define PULL_UP_NINJA_AFTER_SITTING 2.0f // Kéo NINJA lên 18px sau khi ngồi rồi đứng dậy, tránh overlaping do BBOX bottom thu lại khi ngồi
 
-#define NINJA_VJUMP 0.40f
+#define NINJA_VJUMP 0.40f //0.4
 #define NINJA_VJUMP_HURTING 0.5f // nhảy lúc bị đau
 #define PULL_UP_NINJA_AFTER_JUMPING 2.0f // Kéo NINJA lên 18px sau khi nhảy, tránh overlaping do BBOX bottom thu lại khi nhảy
 
@@ -187,7 +187,7 @@ public:
 	void Stop();
 	void ResetSit();
 
-	void Go();
+	void Go(float Vx = NINJA_WALKING_SPEED);
 	void Jump();
 	void Right();
 	void Left();

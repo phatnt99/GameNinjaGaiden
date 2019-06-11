@@ -212,5 +212,5 @@ void WPWindmillStar::Render(Camera * camera)
 		sprite->Draw(pos.x, pos.y);
 	else
 		sprite->DrawFlipX(pos.x, pos.y);
-	RenderBoundingBox(camera);
+	//RenderBoundingBox(camera);
 }
