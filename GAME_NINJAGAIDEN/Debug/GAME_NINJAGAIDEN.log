@@ -1,3 +1,24 @@
-﻿  Camera.cpp
+﻿  Board.cpp
+c:\users\thinkpad\desktop\gameninjagaiden\game_ninjagaiden\boss.h(21): warning C4005: 'TIME_WAIT': macro redefinition
+  c:\users\thinkpad\desktop\gameninjagaiden\game_ninjagaiden\bird.h(10): note: see previous definition of 'TIME_WAIT'
+  Generating Code...
+  Compiling...
+  SceneGame.cpp
+c:\users\thinkpad\desktop\gameninjagaiden\game_ninjagaiden\boss.h(21): warning C4005: 'TIME_WAIT': macro redefinition
+  c:\users\thinkpad\desktop\gameninjagaiden\game_ninjagaiden\bird.h(10): note: see previous definition of 'TIME_WAIT'
+c:\users\thinkpad\desktop\gameninjagaiden\game_ninjagaiden\scenegame.cpp(325): warning C4018: '<': signed/unsigned mismatch
+c:\users\thinkpad\desktop\gameninjagaiden\game_ninjagaiden\scenegame.cpp(470): warning C4018: '>': signed/unsigned mismatch
+c:\users\thinkpad\desktop\gameninjagaiden\game_ninjagaiden\scenegame.cpp(520): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\thinkpad\desktop\gameninjagaiden\game_ninjagaiden\scenegame.cpp(664): warning C4018: '<': signed/unsigned mismatch
+c:\users\thinkpad\desktop\gameninjagaiden\game_ninjagaiden\scenegame.cpp(666): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\thinkpad\desktop\gameninjagaiden\game_ninjagaiden\scenegame.cpp(668): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\thinkpad\desktop\gameninjagaiden\game_ninjagaiden\scenegame.cpp(689): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\thinkpad\desktop\gameninjagaiden\game_ninjagaiden\scenegame.cpp(696): warning C4018: '<': signed/unsigned mismatch
+c:\users\thinkpad\desktop\gameninjagaiden\game_ninjagaiden\scenegame.cpp(725): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  Ninja.cpp
+  GameMain.cpp
+c:\users\thinkpad\desktop\gameninjagaiden\game_ninjagaiden\boss.h(21): warning C4005: 'TIME_WAIT': macro redefinition
+  c:\users\thinkpad\desktop\gameninjagaiden\game_ninjagaiden\bird.h(10): note: see previous definition of 'TIME_WAIT'
+  Generating Code...
   GAME_NINJAGAIDEN.vcxproj -> C:\Users\ThinkPad\Desktop\GameNinjaGaiden\Debug\GAME_NINJAGAIDEN.exe
   GAME_NINJAGAIDEN.vcxproj -> C:\Users\ThinkPad\Desktop\GameNinjaGaiden\Debug\GAME_NINJAGAIDEN.pdb (Partial PDB)
