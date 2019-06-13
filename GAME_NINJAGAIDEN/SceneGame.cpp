@@ -291,18 +291,7 @@ void SceneGame::OnKeyDown(int KeyCode)
 
 void SceneGame::OnKeyUp(int KeyCode)
 {
-	//if (ninja->GetFreeze() == true) // Đang bóng băng thì không quan tâm phím
-	//{
-	//	return;
-	//}
-
-	//if (ninja->GetIsDeadth())
-	//{
-	//	return;
-	//}
-
-	//if (ninja->isSitting == true)
-	//	ninja->ResetSit();
+	
 
 }
 

@@ -25,17 +25,9 @@
 #include "Sound.h"
 #define GAME_TIME_MAX 150
 
-#define REGION_CREATE_PANTHER_LEFT 1090.0f
-#define REGION_CREATE_PANTHER_RIGHT 2305.0f
 
-#define CAMERA_POSITION_Y_LAKE 374.0f
 
-#define CAMERA_BOUNDARY_LAKE_LEFT 3075.0f
-#define CAMERA_BOUNDARY_LAKE_RIGHT (4111.0f-SCREEN_WIDTH)
 
-#define CAMERA_BOUNDARY_BOSS_RIGHT (5648.0f - SCREEN_WIDTH)
-
-#define CROSS_LIMITTIME 1000 // thời gian tối đa khi dùng Cross
 
 #define TIME_FOR_DEATH 4000
 
@@ -53,9 +45,6 @@ private:
 	vector<Unit*> listUnit;
 	GameTime * gameTime;
 	int StateCurrent;
-
-	CSprite * spriteLagerHeart;
-	int GameOverSelect;
 
 	eType mapCurrent;
 	int timeFreeze = 5000;
@@ -93,12 +82,6 @@ public:
 	void CheckCollisonOfNinja(DWORD dt);
 	void CheckDropItem();
 	void CollisionWithItems(DWORD dt);
-	//Item * GetNewItem(int Id, eType Type, float X, float Y);
-
-
-	void ProcessClearState3(DWORD dt);
-	void ProcessInvisibilityPotion(DWORD dt);
-	void ProcessCross(DWORD dt);
 
 	void ReplayMusicGame(int map);
 };

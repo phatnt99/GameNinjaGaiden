@@ -86,15 +86,6 @@
 #define NINJA_ANI_CLIMB_GO_UP_BEGIN 24
 #define NINJA_ANI_CLIMB_GO_UP_END 25
 
-
-
-
-#define NINJA_SPEED_ONSTAIR 0.09f 
-
-#define NINJA_ANI_STAIR_STANDING_UP 12
-#define NINJA_ANI_STAIR_STANDING_DOWN 10
-
-
 #define TIME_FREEZE_MAX 500
 
 
@@ -110,7 +101,6 @@
 class Ninja : public GameObject
 {
 private:
-	CSprite * _sprite_deadth;
 
 	Sound * sound;
 	int strength; // strength cua ninja
@@ -123,19 +113,6 @@ private:
 	D3DXVECTOR2 PositionBackup;
 
 	int flag = 0;
-	bool isWalking_Backup;
-	bool isJumping_Backup;
-	bool isSitting_Backup;
-	bool isAttacking_Backup;
-	int directionY_Backup;
-	int directionAfterGo;
-
-	float AutoGoX_Distance; // khoảng cách NINJA cần tự đi
-	float AutoGoX_Speed; // vận tốc đi tự động
-	float AutoGoX_DirectionGo; // hướng tự động đi
-	float AutoGoX_Backup_X; // lưu vị trí trước khi đi tự động
-
-	bool isAutoGoX = 0; // đang ở chế độ auto go?
 
 	bool isDeadth;
 	bool isClimbing;
@@ -161,14 +138,7 @@ public:
 	bool isFall;
 	DWORD timeWait;
 
-	int directionY; // hướng đi theo trục y của NINJA
-
-
-	bool isCollisionAxisYWithBrick = false; // Đang va chạm với đất theo trục y
-
 	DWORD TimeWaitedAfterDeath;
-
-	int iii = 0;
 
 public:
 	Ninja(Camera* camera);
@@ -202,9 +172,6 @@ public:
 	void CollisionWeaponWithObj(const vector<LPGAMEOBJECT> *coObjects = NULL);
 	void CollisionWeaponWithNinja(const vector<LPGAMEOBJECT> *coObjects = NULL);
 	void CollisionWithEnemy(const vector<LPGAMEOBJECT> *coObjects = NULL);
-	//void CollisionWithObjHidden(const vector<LPGAMEOBJECT> *coObjects = NULL);
-	//void CollisionIsOnStair(vector<LPGAMEOBJECT> *coObjects = NULL);
-	//bool isCollisionWithItem(Item * objItem);
 
 	void Attack(eType typeWeapon);
 
@@ -218,13 +185,6 @@ public:
 	void UpdateFreeze(DWORD dt);
 
 	void StartUntouchable();
-
-
-
-	void SetAutoGoX(int DirectionGo, int DirectionBackup, float Dx, float Speed); // set các thông số auto và backup các trạng thái hiện tại
-	bool GetIsAutoGoX(); // kiểm tra có đang ở chế độ auto go?
-
-	void RestoreBackupAutoGoX(); // khôi phục trạng thái 
 
 	bool LoseLife(); // thiết lập lại 1 số thứ sau khi NINJA mất mạng
 	void SetPositionBackup(float X, float Y);  // lưu vị trí cần backup để NINJA die thì bắt đầu lại từ đây
@@ -252,10 +212,6 @@ public:
 	eType GetTypeWeaponCollect();
 	void SetTypeWeaponCollect(eType t);
 	void WeaponCollect(eType t);
-	bool IsUsingWeapon(eType typeWeapon);
-
-	bool GetIsUseDoubleShot();
-	void SetIsUseDoubleShot(bool b);
 
 	void Init(); // khởi tạo lại các trạng thái, HeartCollect, Heath, Lives, Score
 	void Reset(); // khởi tạo lại các trạng thái.

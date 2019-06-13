@@ -4,13 +4,11 @@ Ninja::Ninja(Camera* camera)
 {
 	texture = TextureManager::GetInstance()->GetTexture(eType::NINJA);
 	sprite = new CSprite(texture, 100);
-	//_sprite_deadth = sprite->SelectFrame(NINJA_DEADTH);
 	type = eType::NINJA;
 	sound = Sound::GetInstance();
 	Health = 10;
 	Lives = 5;
 	this->camera = camera;
-	//mapWeapon[eType::KATANA] = new Katana();
 	subWeapon.push_back(new Katana());
 	isGetNewStage = false;
 	isFall = false;
@@ -20,7 +18,7 @@ Ninja::Ninja(Camera* camera)
 
 Ninja::~Ninja()
 {
-	SAFE_DELETE(_sprite_deadth);
+
 }
 
 void Ninja::GetBoundingBox(float & left, float & top, float & right, float & bottom)
@@ -617,7 +615,6 @@ void Ninja::CollisionWithBrick(const vector<LPGAMEOBJECT>* coObjects)
 	{
 		x += dx;
 		y += dy;
-		isCollisionAxisYWithBrick = false;
 
 		isClimbing = false;
 		isClimbUp = false;
@@ -644,12 +641,10 @@ void Ninja::CollisionWithBrick(const vector<LPGAMEOBJECT>* coObjects)
 						isJumping = false;
 						y = y - PULL_UP_NINJA_AFTER_JUMPING;
 					}
-					isCollisionAxisYWithBrick = true;
 				}
 				else
 				{
 					y += dy;
-					isCollisionAxisYWithBrick = true;
 				}
 				
 				if (nx != 0 || ny != 0)
@@ -712,12 +707,12 @@ void Ninja::CollisionWithBrick(const vector<LPGAMEOBJECT>* coObjects)
 							isJumping = false;
 							y = y - PULL_UP_NINJA_AFTER_JUMPING;
 						}
-						isCollisionAxisYWithBrick = true;
+			
 					}
 					else
 					{
 						y += dy;
-						isCollisionAxisYWithBrick = true;
+				
 					}
 
 					if (nx != 0 || ny != 0)
@@ -1197,9 +1192,6 @@ void Ninja::Attack(eType typeWeapon)
 	case eType::KATANA:
 		if (subWeapon.front()->GetFinish()) // vũ khí đã kết thúc thì mới đc tấn công tiếp
 		{
-			//if (isUseDoubleShot && typeWeapon != eType::MORNINGSTAR && IsUsingWeapon(eType::WEAPON_DOUBLE_SHOT)) // Double shot, sub weapon , và vũ khí phụ còn hoạt động thì bỏ qua
-			//	return;
-
 			isAttacking = true; // set trang thái tấn công
 			sprite->SelectFrame(0);
 			sprite->ResetTime();
@@ -1212,10 +1204,7 @@ void Ninja::Attack(eType typeWeapon)
 	default:
 		break;
 	}
-	//if (typeWeapon != eType::KATANA)
-	//	isUseSubWeapon = true;
-	//else
-	//	isUseSubWeapon = false;
+	
 
 
 }
@@ -1267,58 +1256,6 @@ void Ninja::StartUntouchable()
 	untouchable_start = GetTickCount();
 }
 
-void Ninja::SetAutoGoX(int DirectionGo, int directionAfterGo, float Distance, float Speed)
-{
-	if (isAutoGoX == true)
-		return;
-
-	isAutoGoX = true;// chưa vào chế độ autoGo thì set
-
-	AutoGoX_Backup_X = x; // set lại vị trí trước khi đi tự động
-
-						  //Backup trạng thái
-	isWalking_Backup = isWalking;
-	isJumping_Backup = isJumping;
-	isSitting_Backup = isSitting;
-	isAttacking_Backup = isAttacking;
-	directionY_Backup = directionY;
-
-	AutoGoX_Distance = Distance;
-	AutoGoX_Speed = Speed;
-	AutoGoX_DirectionGo = (float)DirectionGo;
-	this->directionAfterGo = directionAfterGo;
-
-
-	direction = DirectionGo;
-	vx = Speed * DirectionGo;
-	isWalking = 1;
-	isJumping = 0;
-	isSitting = 0;
-	isAttacking = 0;
-}
-
-bool Ninja::GetIsAutoGoX()
-{
-	return isAutoGoX;
-}
-
-void Ninja::RestoreBackupAutoGoX()
-{
-	isWalking = isWalking_Backup;
-	isJumping = isJumping_Backup;
-	isSitting = isSitting_Backup;
-	isAttacking = isAttacking_Backup;
-	directionY = directionY_Backup;
-
-	direction = directionAfterGo; // set hướng sau khi đi
-
-	isWalking = 0; // tắt trạng thái đang đi
-	isAutoGoX = 0; // tắt trạng thái auto
-
-	vx = 0;
-	vy = 0;
-	// đi xong thì cho Ninja đứng yên
-}
 
 void Ninja::SetPositionBackup(float X, float Y)
 {
@@ -1361,42 +1298,8 @@ void Ninja::SetTypeWeaponCollect(eType t)
 
 void Ninja::WeaponCollect(eType t)
 {
-	/*switch (t)
-	{
-
-	case WPTHROWINGSTAR:
-	{
-		if (mapWeapon[t] == NULL)
-		{
-			mapWeapon[t] = new WPThrowingStar();
-		}
-		break;
-	}
-	default:
-		break;
-	}
-*/
-//sound->Play(eSound::soundCollectWeapon);
+	
 	SetTypeWeaponCollect(t); // set kiểu vũ khí đang nhặt được
-}
-
-bool Ninja::IsUsingWeapon(eType typeWeapon)
-{
-	//if (this->mapWeapon.find(typeWeapon) != this->mapWeapon.end()) // có tồn tại
-	//{
-	//	if (this->mapWeapon[typeWeapon]->GetFinish() == false) //chưa kết thúc
-	//		return true;
-	//}
-	return false;
-}
-
-bool Ninja::GetIsUseDoubleShot()
-{
-	return true;
-}
-
-void Ninja::SetIsUseDoubleShot(bool b)
-{
 }
 
 void Ninja::Init()
@@ -1419,7 +1322,6 @@ void Ninja::Reset()
 	isWalking = 0;
 	isAttacking = 0;
 
-	isAutoGoX = 0;
 	isHurting = 0;
 
 	vx = 0;

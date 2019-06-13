@@ -18,14 +18,10 @@ protected:
 	int _height;
 
 	float _boundaryLeft; // biên giới hạn bên trái 
-	float _boundaryRight; // biên giới hạn bên phải, không bao gồm đoạn Ninja đi được ở cuối - SCREEN_WIDTH 
+	float _boundaryRight; // biên giới hạn bên phải
 
 	float vx;
 	DWORD dt;
-
-	bool isAutoGoX; // đang ở chế độ tự đi
-	float AutoGoX_Distance; //khoảng cách cần tự động đi
-	float AutoGoX_Backup_X; // vị trí camera trước khi vào chế độ tự đi
 
 	bool isAllowFollowNinja;
 
@@ -48,11 +44,6 @@ public:
 
 	bool AllowFollowNinja();
 	void SetAllowFollowNinja(bool b);
-
-
-	void SetAutoGoX(float Distance, float Speed); // set các thông số auto
-	void StopAutoGoX();
-	bool GetIsAutoGoX();
 
 	void SetBoundary(float left, float right); // set biên giới hạn cho camera
 	float GetBoundaryRight();

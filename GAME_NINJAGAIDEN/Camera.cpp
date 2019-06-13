@@ -4,12 +4,11 @@
 
 
 
-Camera::Camera(int w, int h/*, int b_left, int b_right*/)
+Camera::Camera(int w, int h)
 {
 	_width = w;
 	_height = h;
 	isAllowFollowNinja = true;
-	isAutoGoX = false;
 
 	// Biên mặc định ban đầu là kích thước MAP
 	_boundaryLeft = 0;
@@ -26,25 +25,6 @@ Camera::~Camera()
 void Camera::Update(DWORD dt)
 {
 	this->dt = dt;
-
-	if (isAutoGoX)
-	{
-		float dx = vx * dt;
-		_xCam += dx;
-	}
-
-
-
-	if (isAutoGoX == true)
-	{
-		if (abs(_xCam - AutoGoX_Backup_X) >= AutoGoX_Distance)
-		{
-			_xCam = _xCam - (abs(_xCam - AutoGoX_Backup_X) - AutoGoX_Distance);
-			isAutoGoX = false;
-		}
-	}
-
-
 
 	if (_xCam < _boundaryLeft)
 		_xCam = _boundaryLeft;
@@ -104,26 +84,6 @@ void Camera::SetAllowFollowNinja(bool b)
 	isAllowFollowNinja = b;
 }
 
-void Camera::SetAutoGoX(float Distance, float Speed)
-{
-	if (isAutoGoX == true)
-		return;
-	vx = Speed;
-	AutoGoX_Backup_X = _xCam;
-	AutoGoX_Distance = Distance;
-	isAutoGoX = true;
-	isAllowFollowNinja = false;
-}
-
-void Camera::StopAutoGoX()
-{
-	isAutoGoX = false;
-}
-
-bool Camera::GetIsAutoGoX()
-{
-	return isAutoGoX;
-}
 
 void Camera::SetBoundary(float left, float right)
 {
