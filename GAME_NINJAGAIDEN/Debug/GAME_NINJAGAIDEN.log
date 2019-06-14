@@ -1,24 +1,78 @@
-﻿  Board.cpp
-c:\users\thinkpad\desktop\gameninjagaiden\game_ninjagaiden\boss.h(21): warning C4005: 'TIME_WAIT': macro redefinition
-  c:\users\thinkpad\desktop\gameninjagaiden\game_ninjagaiden\bird.h(10): note: see previous definition of 'TIME_WAIT'
+﻿  TextureManager.cpp
+  Sound.cpp
+d:\năm 2\game\gameninjagaiden\game_ninjagaiden\sound.cpp(47): warning C4800: 'BOOL': forcing value to bool 'true' or 'false' (performance warning)
+  SceneGame.cpp
+d:\năm 2\game\gameninjagaiden\game_ninjagaiden\boss.h(21): warning C4005: 'TIME_WAIT': macro redefinition
+  d:\năm 2\game\gameninjagaiden\game_ninjagaiden\bird.h(10): note: see previous definition of 'TIME_WAIT'
+d:\năm 2\game\gameninjagaiden\game_ninjagaiden\scenegame.cpp(417): warning C4018: '>': signed/unsigned mismatch
+d:\năm 2\game\gameninjagaiden\game_ninjagaiden\scenegame.cpp(467): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\năm 2\game\gameninjagaiden\game_ninjagaiden\scenegame.cpp(611): warning C4018: '<': signed/unsigned mismatch
+d:\năm 2\game\gameninjagaiden\game_ninjagaiden\scenegame.cpp(613): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\năm 2\game\gameninjagaiden\game_ninjagaiden\scenegame.cpp(615): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\năm 2\game\gameninjagaiden\game_ninjagaiden\scenegame.cpp(636): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\năm 2\game\gameninjagaiden\game_ninjagaiden\scenegame.cpp(643): warning C4018: '<': signed/unsigned mismatch
+d:\năm 2\game\gameninjagaiden\game_ninjagaiden\scenegame.cpp(672): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  Ninja.cpp
+  Map.cpp
+  Grid.cpp
+d:\năm 2\game\gameninjagaiden\game_ninjagaiden\boss.h(21): warning C4005: 'TIME_WAIT': macro redefinition
+  d:\năm 2\game\gameninjagaiden\game_ninjagaiden\bird.h(10): note: see previous definition of 'TIME_WAIT'
+d:\năm 2\game\gameninjagaiden\game_ninjagaiden\grid.cpp(99): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+d:\năm 2\game\gameninjagaiden\game_ninjagaiden\grid.cpp(101): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+d:\năm 2\game\gameninjagaiden\game_ninjagaiden\grid.cpp(124): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  GameTime.cpp
+  GameMain.cpp
+d:\năm 2\game\gameninjagaiden\game_ninjagaiden\boss.h(21): warning C4005: 'TIME_WAIT': macro redefinition
+  d:\năm 2\game\gameninjagaiden\game_ninjagaiden\bird.h(10): note: see previous definition of 'TIME_WAIT'
+  Board.cpp
+d:\năm 2\game\gameninjagaiden\game_ninjagaiden\boss.h(21): warning C4005: 'TIME_WAIT': macro redefinition
+  d:\năm 2\game\gameninjagaiden\game_ninjagaiden\bird.h(10): note: see previous definition of 'TIME_WAIT'
   Generating Code...
   Compiling...
-  SceneGame.cpp
-c:\users\thinkpad\desktop\gameninjagaiden\game_ninjagaiden\boss.h(21): warning C4005: 'TIME_WAIT': macro redefinition
-  c:\users\thinkpad\desktop\gameninjagaiden\game_ninjagaiden\bird.h(10): note: see previous definition of 'TIME_WAIT'
-c:\users\thinkpad\desktop\gameninjagaiden\game_ninjagaiden\scenegame.cpp(325): warning C4018: '<': signed/unsigned mismatch
-c:\users\thinkpad\desktop\gameninjagaiden\game_ninjagaiden\scenegame.cpp(470): warning C4018: '>': signed/unsigned mismatch
-c:\users\thinkpad\desktop\gameninjagaiden\game_ninjagaiden\scenegame.cpp(520): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\thinkpad\desktop\gameninjagaiden\game_ninjagaiden\scenegame.cpp(664): warning C4018: '<': signed/unsigned mismatch
-c:\users\thinkpad\desktop\gameninjagaiden\game_ninjagaiden\scenegame.cpp(666): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\thinkpad\desktop\gameninjagaiden\game_ninjagaiden\scenegame.cpp(668): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\thinkpad\desktop\gameninjagaiden\game_ninjagaiden\scenegame.cpp(689): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\thinkpad\desktop\gameninjagaiden\game_ninjagaiden\scenegame.cpp(696): warning C4018: '<': signed/unsigned mismatch
-c:\users\thinkpad\desktop\gameninjagaiden\game_ninjagaiden\scenegame.cpp(725): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-  Ninja.cpp
-  GameMain.cpp
-c:\users\thinkpad\desktop\gameninjagaiden\game_ninjagaiden\boss.h(21): warning C4005: 'TIME_WAIT': macro redefinition
-  c:\users\thinkpad\desktop\gameninjagaiden\game_ninjagaiden\bird.h(10): note: see previous definition of 'TIME_WAIT'
+  Witch.cpp
+d:\năm 2\game\gameninjagaiden\game_ninjagaiden\witch.cpp(71): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+d:\năm 2\game\gameninjagaiden\game_ninjagaiden\witch.cpp(96): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Thief.cpp
+  TheBird.cpp
+  Soldier.cpp
+  Runner.cpp
+  Gunner.cpp
+  Enemy.cpp
+  Dog.cpp
+  Butterfly.cpp
+  Boss.cpp
+d:\năm 2\game\gameninjagaiden\game_ninjagaiden\boss.cpp(131): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\năm 2\game\gameninjagaiden\game_ninjagaiden\boss.cpp(140): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  Bird.cpp
   Generating Code...
-  GAME_NINJAGAIDEN.vcxproj -> C:\Users\ThinkPad\Desktop\GameNinjaGaiden\Debug\GAME_NINJAGAIDEN.exe
-  GAME_NINJAGAIDEN.vcxproj -> C:\Users\ThinkPad\Desktop\GameNinjaGaiden\Debug\GAME_NINJAGAIDEN.pdb (Partial PDB)
+  Skipping... (no relevant changes detected)
+  Windmillstar.cpp
+  Weapon.cpp
+  WPWindmillStar.cpp
+  WPThrowingStar.cpp
+  WPFireWheel.cpp
+  Timefreeze.cpp
+  Throwingstar.cpp
+  Texture.cpp
+  Sword.cpp
+  Strength.cpp
+  Sprite.cpp
+  SceneManager.cpp
+  Restore.cpp
+  ObjectHidden.cpp
+  Katana.cpp
+  Item.cpp
+  GunnerBullet.cpp
+  GameObject.cpp
+  Game.cpp
+  Firewheel.cpp
+  Effect_boss.cpp
+  Effect.cpp
+  Bullet.cpp
+  Brick.cpp
+  Bonus.cpp
+  Bom.cpp
+  BoardHealth.cpp
+  Alphabet.cpp
+  GAME_NINJAGAIDEN.vcxproj -> D:\Năm 2\Game\GameNinjaGaiden\Debug\GAME_NINJAGAIDEN.exe
+  GAME_NINJAGAIDEN.vcxproj -> D:\Năm 2\Game\GameNinjaGaiden\Debug\GAME_NINJAGAIDEN.pdb (Partial PDB)

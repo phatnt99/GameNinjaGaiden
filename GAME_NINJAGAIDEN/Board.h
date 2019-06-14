@@ -27,8 +27,6 @@ private:
 	string FillNumber(string s, UINT MaxNumber);
 
 
-	//GSprite * _spriteIconDoubleShot;
-
 public:
 	Board(float X, float Y);
 	void Render(Ninja * ninja, int state1, int state2, int RemainingTime,Boss *boss );

@@ -36,7 +36,6 @@ void TextureManager::LoadResource()
 	//player
 	AddTexture(eType::NINJA, new CTexture("Resources/ninja1.png", 8, 4, 32));
 	AddTexture(eType::NINJA_TRANSPARENT, new CTexture("Resources/ninja1_trans.png", 8, 4, 32));
-	//AddTexture(eType::NINJA_DEADTH, new CTexture("Resources/simondeath.png"));
 
 	//map
 	AddTexture(eType::MAP1, new CTexture("Resources/map/tileset_map1.png", 14, 7, 98));

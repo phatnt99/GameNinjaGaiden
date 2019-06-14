@@ -294,7 +294,7 @@ void Ninja::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					}
 					else
 					{
-						sprite->SelectFrame(NINJA_ANI_IDLE);		// SIMON đứng yên
+						sprite->SelectFrame(NINJA_ANI_IDLE);		
 
 					}
 			}
@@ -566,9 +566,6 @@ void Ninja::SetHurt(int t)
 	}
 	StartUntouchable(); // không cho các object đụng tiếp
 
-
-
-	//sound->Play(eSound::soundHurting);
 }
 
 void Ninja::SetStrength(int s)

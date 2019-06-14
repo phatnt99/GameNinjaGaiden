@@ -42,16 +42,16 @@ void Map::ReadMapTXT(char * filename)
 		for (int j = 0; j < ColumnMap; j++)
 			inp >> TileMap[i][j];
 	inp.close();
-	ofstream out;
-	out.open("data.txt");
-	for (int i = 0; i < RowMap; i++)
-	{
-		for (int j = 0; j < ColumnMap; j++)
-		{
-			out << TileMap[i][j] << " ";
-		} out << endl;
-	}
-	out.close();
+	//ofstream out;
+	//out.open("data.txt");
+	//for (int i = 0; i < RowMap; i++)
+	//{
+	//	for (int j = 0; j < ColumnMap; j++)
+	//	{
+	//		out << TileMap[i][j] << " ";
+	//	} out << endl;
+	//}
+	//out.close();
 }
 
 void Map::DrawMap(Camera *camera,int R, int G, int B)

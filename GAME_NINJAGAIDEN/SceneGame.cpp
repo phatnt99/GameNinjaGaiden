@@ -220,47 +220,10 @@ void SceneGame::OnKeyDown(int KeyCode)
 		return;
 	}
 
-
-	//	DestroyWindow(Game::GetInstance()->GetWindowHandle()); // thoát
-
-	//if (ninja->GetIsAutoGoX() == true) // đang chế độ tự đi thì ko xét phím
-	//	return;
-
-	//if (camera->GetIsAutoGoX()) // camera đang chế độ tự đi thì ko xét phím
-	//	return;
-
-
-	//if (ninja->isHurting)
-	//	return;
-
-
-	//if (!(Game::GetInstance()->IsKeyDown(DIK_UP) && Game::GetInstance()->IsKeyDown(DIK_A) && ninja->isAttacking == true) || !(Game::GetInstance()->IsKeyDown(DIK_LEFT)) || !(Game::GetInstance()->IsKeyDown(DIK_RIGHT)))
-	//		ninja->Attack(eType::KATANA);
-
 	if (!(Game::GetInstance()->IsKeyDown(DIK_UP) && Game::GetInstance()->IsKeyDown(DIK_X)))
 		if (Game::GetInstance()->IsKeyDown(DIK_X) && ninja->isAttacking == false && !ninja->GetIsClimbing())
 			ninja->Attack(eType::KATANA);
 
-	//if (ninja->isJumping && ninja->isWalking)
-	//{
-	//	return;
-	//}
-
-	//if (ninja->isSitting)
-	//{
-	//	if (Game::GetInstance()->IsKeyDown(DIK_A))
-	//	{
-	//		ninja->Attack(eType::KATANA);
-	//	}
-	//}
-	//else
-	//{
-		//if (!(Game::GetInstance()->IsKeyDown(DIK_UP) && Game::GetInstance()->IsKeyDown(DIK_A) /*&& simon->isProcessingOnStair == 0*/ && ninja->isAttacking == true))
-		//	if (KeyCode == DIK_A) // không phải đang xử lí việc đi trên thang thì đc đánh
-		//	{
-		//		ninja->Attack(eType::KATANA);
-		//	}
-	//}
 	if (KeyCode == DIK_Z)
 	{
 		
@@ -279,13 +242,6 @@ void SceneGame::OnKeyDown(int KeyCode)
 			ninja->Jump();
 		}
 	}
-	//if (KeyCode == DIK_R)
-	//{
-	//	if (isDebug_RenderBBox==0)
-	//		isDebug_RenderBBox = 1;
-	//	else
-	//		isDebug_RenderBBox = 0;
-	//}
 
 }
 
@@ -319,15 +275,6 @@ void SceneGame::InitGame(eType map)
 	gameTime->SetTime(0); // đếm lại từ 0
 
 
-}
-bool FilterThief(vector<GameObject*>list, GameObject* obj)
-{
-	for (int i = 0; i < list.size(); i++)
-	{
-		if (obj->BackupX == list[i]->BackupX)
-			return true;
-	}
-	return false;
 }
 
 
@@ -851,7 +798,7 @@ void SceneGame::LoadMap(eType x)
 
 void SceneGame::CheckCollision(DWORD dt)
 {
-	CheckCollisonOfNinja(dt); // kt vũ khí với enemy và simon với enemy
+	CheckCollisonOfNinja(dt); // kt vũ khí với enemy và ninja với enemy
 
 }
 

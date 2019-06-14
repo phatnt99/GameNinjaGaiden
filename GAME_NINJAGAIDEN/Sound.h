@@ -37,34 +37,6 @@ enum eSound
 	//others
 	warningtime = 201,
 	remainingtime = 202,
-	//soundWhip = 1,
-	//soundHit = 2,
-	//soundCollectItem = 3,
-	//soundCollectWeapon = 4,
-	//soundStopTimer = 5,
-	//soundDagger = 6,
-	//soundDisplayMonney = 7,
-	//soundHurting = 8,
-	//soundOpenDoor = 9,
-	//soundBrokenBrick = 10,
-	//soundHolyWater = 11,
-	//soundSplashwater = 12,
-	//soundFallingDownWaterSurface = 13,
-	//soundGetScoreTimer = 14,
-	//soundGetScoreHeart = 15,
-	//soundAxe = 16,
-	//soundStopWatch = 17,
-	//soundInvisibilityPotion_Begin = 18,
-	//soundInvisibilityPotion_End = 19,
-	//soundHolyCross = 20,
-	//soundBoomerang = 21,
-
-
-	//musicState1 = 51,
-	//musicLifeLost = 52,
-	//music_PhantomBat = 53,
-	//musicStateClear = 54,
-	//musicGame_Start_Prologue = 55
 };
 
 

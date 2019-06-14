@@ -12,8 +12,6 @@ Board::Board(float X, float Y)
 	texture = TextureManager::GetInstance()->GetTexture(eType::BOARD);
 	sprite = new CSprite(texture, 0);
 
-	//_spriteIconDoubleShot = new GSprite(TextureManager::GetInstance()->GetTexture(eType::ITEMDOUBLESHOT), 0);
-
 	x = X;
 	y = Y;
 
@@ -67,10 +65,6 @@ void Board::Render(Ninja * ninja, int state1, int state2, int RemainingTime, Bos
 		break;
 	}
 
-	//if (simon->GetIsUseDoubleShot())
-	//{
-	//	_spriteIconDoubleShot->Draw(x + 465, y + 35);
-	//}
 }
 
 

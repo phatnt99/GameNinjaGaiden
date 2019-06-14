@@ -39,37 +39,6 @@ void Sound::LoadResourceSound()
 
 	AddSound(eSound::warningtime, "Resources/sound/warningtime.wav");
 	AddSound(eSound::remainingtime, "Resources/sound/remainingtime.wav");
-	//AddSound(eSound::soundWhip, "Resources/sound/usingwhip.wav");
-	//AddSound(eSound::soundHolyWater, "Resources/sound/holywater.wav");
-	//AddSound(eSound::soundHit, "Resources/sound/hit.wav");
-	//AddSound(eSound::soundHolyCross, "Resources/sound/holycross.wav");
-	//AddSound(eSound::soundBoomerang, "Resources/sound/08-boomerang.wav");
-
-
-
-	//AddSound(eSound::soundStopTimer, "Resources/sound/stoptimer.wav");
-	//AddSound(eSound::soundDagger, "Resources/sound/usingdagger.wav");
-	//AddSound(eSound::soundDisplayMonney,"Resources/sound/display_monney.wav");
-	//AddSound(eSound::soundAxe, "Resources/sound/Axe.wav");
-	//AddSound(eSound::soundStopWatch, "Resources/sound/StopWatch.wav");
-	//AddSound(eSound::soundInvisibilityPotion_Begin, "Resources/sound/InvisibilityPotion_Begin.wav");
-	//AddSound(eSound::soundInvisibilityPotion_End, "Resources/sound/InvisibilityPotion_End.wav");
-
-
-	//AddSound(eSound::soundHurting, "Resources/sound/hurting.wav");
-	//AddSound(eSound::soundOpenDoor, "Resources/sound/opendoor.wav");
-	//AddSound(eSound::soundBrokenBrick, "Resources/sound/broken_brick.wav");
-	//AddSound(eSound::soundSplashwater, "Resources/sound/splashwater.wav");
-	//AddSound(eSound::soundFallingDownWaterSurface, "Resources/sound/fallingdownwatersurface.wav");
-	//AddSound(eSound::soundGetScoreTimer, "Resources/sound/getscoretime.wav");
-	//AddSound(eSound::soundGetScoreHeart, "Resources/sound/getscoreheart-[AudioTrimmer.com].wav");
-
-
-	//AddSound(eSound::musicLifeLost, "Resources/music/Life_Lost.wav");
-
-	//AddSound(eSound::music_PhantomBat, "Resources/music/Boss_Battle_Poison_Mind.wav");
-	//AddSound(eSound::musicStateClear, "Resources/music/Stage_Clear.wav");
-	//AddSound(eSound::musicGame_Start_Prologue, "Resources/music/Game_Start_Prologue.wav");
 
 }
 

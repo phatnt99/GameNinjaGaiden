@@ -4,7 +4,7 @@
 #include "ObjectHidden.h"
 #include "Bird.h"
 #include "Thief.h"
-#include"Dog.h"
+#include "Dog.h"
 #include "Butterfly.h"
 #include "TheBird.h"
 #include "Witch.h"
@@ -119,11 +119,6 @@ GameObject * Grid::GetNewObject(int id, int direction, int type, float x, float 
 
 void Grid::GetListObject(vector<Unit*>& listUnit, Camera * camera)
 {
-	//int bottom = (int)((camera->GetYCam() + camera->GetHeight() - 1) / GRID_CELL_HEIGHT);
-	//int top = (int)((camera->GetYCam() + 1) / GRID_CELL_HEIGHT);
-
-	//int left = (int)((camera->GetXCam() + 1) / GRID_CELL_WIDTH);
-	//int right = (int)((camera->GetXCam() + camera->GetWidth() - 1) / GRID_CELL_WIDTH);
 	
 	int start_col = (int)(camera->GetXCam() / cellWidth);
 	int end_col = ceil((camera->GetXCam() + SCREEN_WIDTH) / cellWidth);

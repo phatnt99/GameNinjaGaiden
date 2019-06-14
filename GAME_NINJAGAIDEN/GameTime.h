@@ -8,7 +8,6 @@ class GameTime
 private:
 	DWORD accumulationTime; // thời gian đã tích lũy
 	int time; // time game 
-	bool isJustChanged; // kiểm tra có phải biến time vừa được cập nhật?
 
 public:
 	GameTime();
@@ -16,7 +15,6 @@ public:
 	void Update(DWORD dt);
 	void SetTime(int t);
 	int GetTime();
-	bool CheckIsJustChanged();
 };
 
 

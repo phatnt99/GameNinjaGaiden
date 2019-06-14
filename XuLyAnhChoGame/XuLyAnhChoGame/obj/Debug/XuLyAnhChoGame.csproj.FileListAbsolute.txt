@@ -1,0 +1,36 @@
+D:\CSharp.Learn\RealProject\XuLyAnhChoGame\XuLyAnhChoGame\bin\Debug\XuLyAnhChoGame.exe.config
+D:\CSharp.Learn\RealProject\XuLyAnhChoGame\XuLyAnhChoGame\bin\Debug\XuLyAnhChoGame.exe
+D:\CSharp.Learn\RealProject\XuLyAnhChoGame\XuLyAnhChoGame\bin\Debug\XuLyAnhChoGame.pdb
+D:\CSharp.Learn\RealProject\XuLyAnhChoGame\XuLyAnhChoGame\obj\Debug\XuLyAnhChoGame.csprojResolveAssemblyReference.cache
+D:\CSharp.Learn\RealProject\XuLyAnhChoGame\XuLyAnhChoGame\obj\Debug\XuLyAnhChoGame.Properties.Resources.resources
+D:\CSharp.Learn\RealProject\XuLyAnhChoGame\XuLyAnhChoGame\obj\Debug\XuLyAnhChoGame.csproj.GenerateResource.Cache
+D:\CSharp.Learn\RealProject\XuLyAnhChoGame\XuLyAnhChoGame\obj\Debug\XuLyAnhChoGame.exe
+D:\CSharp.Learn\RealProject\XuLyAnhChoGame\XuLyAnhChoGame\obj\Debug\XuLyAnhChoGame.pdb
+D:\CSharp.Learn\RealProject\XuLyAnhChoGame\XuLyAnhChoGame\obj\Debug\XuLyAnhChoGame.Form1.resources
+C:\Users\TyanLover\Downloads\XuLyAnhChoGame\XuLyAnhChoGame\bin\Debug\XuLyAnhChoGame.exe.config
+C:\Users\TyanLover\Downloads\XuLyAnhChoGame\XuLyAnhChoGame\obj\Debug\XuLyAnhChoGame.exe
+C:\Users\TyanLover\Downloads\XuLyAnhChoGame\XuLyAnhChoGame\obj\Debug\XuLyAnhChoGame.pdb
+C:\Users\TyanLover\Downloads\XuLyAnhChoGame\XuLyAnhChoGame\bin\Debug\XuLyAnhChoGame.exe
+C:\Users\TyanLover\Downloads\XuLyAnhChoGame\XuLyAnhChoGame\bin\Debug\XuLyAnhChoGame.pdb
+C:\Users\TyanLover\Downloads\XuLyAnhChoGame\XuLyAnhChoGame\obj\Debug\XuLyAnhChoGame.csprojResolveAssemblyReference.cache
+C:\Users\TyanLover\Downloads\XuLyAnhChoGame\XuLyAnhChoGame\obj\Debug\XuLyAnhChoGame.Form1.resources
+C:\Users\TyanLover\Downloads\XuLyAnhChoGame\XuLyAnhChoGame\obj\Debug\XuLyAnhChoGame.Properties.Resources.resources
+C:\Users\TyanLover\Downloads\XuLyAnhChoGame\XuLyAnhChoGame\obj\Debug\XuLyAnhChoGame.csproj.GenerateResource.Cache
+C:\Users\TyanLover\Desktop\17520879 (1)\XuLyAnhChoGame\XuLyAnhChoGame\bin\Debug\XuLyAnhChoGame.exe.config
+C:\Users\TyanLover\Desktop\17520879 (1)\XuLyAnhChoGame\XuLyAnhChoGame\obj\Debug\XuLyAnhChoGame.exe
+C:\Users\TyanLover\Desktop\17520879 (1)\XuLyAnhChoGame\XuLyAnhChoGame\obj\Debug\XuLyAnhChoGame.pdb
+C:\Users\TyanLover\Desktop\17520879 (1)\XuLyAnhChoGame\XuLyAnhChoGame\bin\Debug\XuLyAnhChoGame.exe
+C:\Users\TyanLover\Desktop\17520879 (1)\XuLyAnhChoGame\XuLyAnhChoGame\bin\Debug\XuLyAnhChoGame.pdb
+C:\Users\TyanLover\Desktop\17520879 (1)\XuLyAnhChoGame\XuLyAnhChoGame\obj\Debug\XuLyAnhChoGame.csprojResolveAssemblyReference.cache
+C:\Users\TyanLover\Desktop\17520879 (1)\XuLyAnhChoGame\XuLyAnhChoGame\obj\Debug\XuLyAnhChoGame.Form1.resources
+C:\Users\TyanLover\Desktop\17520879 (1)\XuLyAnhChoGame\XuLyAnhChoGame\obj\Debug\XuLyAnhChoGame.Properties.Resources.resources
+C:\Users\TyanLover\Desktop\17520879 (1)\XuLyAnhChoGame\XuLyAnhChoGame\obj\Debug\XuLyAnhChoGame.csproj.GenerateResource.Cache
+C:\Users\ThinkPad\Desktop\XuLyAnhChoGame\XuLyAnhChoGame\bin\Debug\XuLyAnhChoGame.exe.config
+C:\Users\ThinkPad\Desktop\XuLyAnhChoGame\XuLyAnhChoGame\bin\Debug\XuLyAnhChoGame.exe
+C:\Users\ThinkPad\Desktop\XuLyAnhChoGame\XuLyAnhChoGame\bin\Debug\XuLyAnhChoGame.pdb
+C:\Users\ThinkPad\Desktop\XuLyAnhChoGame\XuLyAnhChoGame\obj\Debug\XuLyAnhChoGame.csprojResolveAssemblyReference.cache
+C:\Users\ThinkPad\Desktop\XuLyAnhChoGame\XuLyAnhChoGame\obj\Debug\XuLyAnhChoGame.Form1.resources
+C:\Users\ThinkPad\Desktop\XuLyAnhChoGame\XuLyAnhChoGame\obj\Debug\XuLyAnhChoGame.Properties.Resources.resources
+C:\Users\ThinkPad\Desktop\XuLyAnhChoGame\XuLyAnhChoGame\obj\Debug\XuLyAnhChoGame.csproj.GenerateResource.Cache
+C:\Users\ThinkPad\Desktop\XuLyAnhChoGame\XuLyAnhChoGame\obj\Debug\XuLyAnhChoGame.exe
+C:\Users\ThinkPad\Desktop\XuLyAnhChoGame\XuLyAnhChoGame\obj\Debug\XuLyAnhChoGame.pdb

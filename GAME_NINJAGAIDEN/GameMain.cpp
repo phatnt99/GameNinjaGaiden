@@ -5,7 +5,6 @@
 #define MAIN_WINDOW_TITLE "Ninja Gaiden"
 
 #include "SceneGame.h"
-//#include "Scene_Intro.h"
 
 Game *game;
 SceneManager * sceneManager;
